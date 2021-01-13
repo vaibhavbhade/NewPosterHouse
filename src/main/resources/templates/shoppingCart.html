@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="www.w3.org/1999/xhtml">
+
+<head th:replace="common/header :: common-header"/>
+
+<body>
+
+
+    <!-- Start Header Area -->
+		<div th:replace="common/header :: navbar "/>
+
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>                       
+						<a th:href="@{/fetchProduct}">Products<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Product Details<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+<div th:if="${notEnoughStock}" class="alert alert-warning">
+						Oops, some of the products don't have enough stock. Please update
+						product quantity.</div>
+					<div th:if="${emptyCart}" class="alert alert-warning">Oops,
+						your cart is empty. See if you can find what you like in the
+						Product and add them to cart.</div>
+<div th:if="${qtyMsg}" class="alert alert-warning">Select quantity more then 0.</div>
+
+<div th:if="${idError}" class="alert alert-warning">Bad Request.</div>
+
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                       
+                
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                 <th scope="col">Size</th>
+                                
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        
+                        
+                        <tbody >
+                        
+                            <tr th:each="cartItem : ${cartItemList}">
+                               <form th:action="@{/updateCartItem}" method="post">
+                            
+                            
+                                <td>               
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <a href="single-product.html"><img src="img/category/ct2.jpg" alt="" style="max-width:150px;"></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="single-product.html"><p th:text="${cartItem.product.productName}"></p></a>
+                                            <br>
+                                            
+                                             <a class="genric-btn danger circle" th:href="@{/removeItem?id=}+${cartItem.id}">remove</a>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </td>
+                                <td>
+                                <h5><span th:text="${cartItem.size}"></span></h5>
+                                </td>
+                                
+                                <td>
+                                    <h5 >Rs.<span th:text="${cartItem.productConfig.pricePerQty}"></span></h5>
+                                </td>
+                                
+                                <td>               
+                                    <div class="product_count">
+                                     <input hidden="hidden" name="id" th:value="${cartItem.id}" /> 
+								<input  min="1" max="10" type="number" th:id="${cartItem.id}" th:name="qty" th:disabled="${cartItem.product.maximumQuantity==0}" class="form-control cartItemQty" th:value="${cartItem.qty}" />
+								<button style="display: none;" th:id="'update-item-'+${cartItem.id}" type="submit" class="btn btn-warning btn-xs">Update</button>
+								
+                                    </div>
+                                </td>
+                                
+                                <td>
+                                    <h5 th:text="${cartItem.subtotal}"></h5>
+                                </td>
+                                 
+                                </form>
+                            </tr>
+                            
+                        <tbody>
+                            <tbody>
+                            
+<!--                              <tr class="bottom_button">
+                                <td>
+                                    <a class="gray_btn" href="#">Update Cart</a>
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="cupon_text d-flex align-items-center">
+                                        <input type="text" placeholder="Coupon Code">
+                                        <a class="primary-btn" href="#">Apply</a>
+                                        <a class="gray_btn" href="#">Close Coupon</a>
+                                    </div>
+                                </td>
+                            </tr> -->
+                             <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td></td>
+                                <td>
+                                    <h5>Grandtotal</h5>
+                                </td>
+                                <td>
+                                    <h5 >Rs.<span th:text="${shoppingCart.grandTotal}"></span></h5>
+                                </td>
+                            </tr>
+                               <tr class="shipping_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+<!--                                     <h5>Shipping</h5>
+ -->                                </td>
+                                <td>
+                                    <!-- <div class="shipping_box">
+                                        <ul class="list">
+                                            <li><a href="#">Free Shipping</a></li>
+                                            <li class="active"><a href="#">Flat Rate: Rs.50.00</a></li>
+                                            <li><a href="#">Local Delivery: Rs.10.00</a></li>
+                                        </ul>
+                                        <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
+                                        <select class="shipping_select">
+                                            <option value="1">India</option>
+                                        </select>
+                                        <select class="shipping_select">
+                                            <option value="1">Select a State</option>
+                                            <option value="2">Maharashtra</option>
+                                        </select>
+                                        <input type="text" placeholder="Postcode/Zipcode">
+                                        <a class="gray_btn" href="#">Update Details</a>
+                                    </div>
+ -->                                </td>
+                            </tr>
+                            <tr class="out_button_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" th:href="@{/fetchProduct}">Continue Shopping</a>
+                                        <a class="primary-btn" th:href="@{/checkout(id=${shoppingCart.id})}">Proceed to checkout</a>
+                                    </div>
+                                </td>
+                            </tr>
+                             </tbody>
+                                                      
+                            
+                            </table>
+
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+
+    <!-- start footer Area -->
+			<div th:replace="common/header :: footer "/>
+
+    <!-- End footer Area -->
+
+    <div th:replace="common/header :: body-bottom-scripts " />
+</body>
+
+</html>

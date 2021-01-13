@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.w3.org/1999/xhtml">
+
+<head th:replace="common/header :: common-header">
+    <title>Poster House | Register</title>
+
+  </head>
+
+<body>
+
+    <!-- Start Header Area -->
+	<div th:replace="common/header :: navbar "/>
+	
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Register</h1>
+                    <nav class="d-flex align-items-center">
+                        <a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">Register</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+           <h2>Registration</h2>
+            <div class="billing_details">
+                <div class="row">
+                <div class="panel-group">
+							<div class="panel panel-default" style="border: none;">
+								<div class="panel-body" style="background-color: #ededed;margin-top: 20px;">
+								&nbsp;
+								<div>
+								   <label for="newUsername" ><span
+												style="color: red; " ></span></label>&nbsp;<span style="color: red;"class="alert alert-danger" th:if="${usernameExists}">Username already exists.Choose a different one.</span>
+											 <label for="newUsername"  >	<span
+												style="color: red;"></span></label>&nbsp;<span style="color: red;" th:if="${emailExists}" class="alert alert-danger">Email already exists.Choose a different one.</span>
+												 <label for="registerMessage" ><span
+												style="color: red;"></span></label>&nbsp;<span style="color: green;" th:if="${registerSuccess}" class="alert alert-success">Registered successfully.Please Login In.</span>
+											
+									</div>
+									<br>			
+                    <div class="col-lg-8">
+                        <form class="row contact_form" th:action="@{/newUser}" method="post" >
+                       
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" placeholder=" First name *" id="first" name="firstname" required="required">
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="last" name="lastname" placeholder=" Last name *" required="required">
+                               
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                          
+                                <input  placeholder="Username *" type="text" class="form-control" id="username" name="username" required="required">
+                                         <span id="checkUserNameMsg" style="color: red;"></span>
+                                
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                             
+                                <input  placeholder="Password *" type="text" class="form-control" id="password" name="password" required="required">
+                                    <span id="checkPasswordMsg" style="color: red;"></span>
+                                
+                            </div>
+                           <!--  <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="company" name="company" placeholder="Company name">
+                            </div> -->
+                            <div class="col-md-6 form-group p_star">
+                             
+                                <input type="text" size="10" placeholder="Phone number *" class="form-control" id="phoneNumber" name="phonenumber" required="required">
+                                          <span id="checkPhoneNoMsg" style="color: red;"></span>
+                                
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address *" required="required">
+                               
+                            </div>
+                            <!-- <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="add1" name="add1">
+                                <span class="placeholder" data-placeholder="Address line 01"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="add2" name="add2">
+                                <span class="placeholder" data-placeholder="Address line 02"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="city" name="city">
+                                <span class="placeholder" data-placeholder="Town/City"></span>
+                            </div>                           
+                            <div class="col-md-6 form-group p_star">
+                                <select class="country_select">
+                                    <option value="1">Select State</option>
+                                    <option value="2">Maharashtra</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <select class="country_select">
+                                    <option value="1">Select Town/City</option>
+                                    <option value="2">Akola</option>
+                                    <option value="4">Pune</option>
+                                    <option value="5">Mumbai</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
+                            </div>   -->
+                            <div class="col-md-12 form-group">
+		                        <button type="submit"  id="registerButton" class="primary-btn" >Register</button>		                       
+		                    </div>                          
+                        </form>           
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </
+    </section>
+    <!--================End Checkout Area =================-->
+
+    <!-- start footer Area -->
+			<div th:replace="common/header :: footer "/>
+
+    <!-- End footer Area -->
+
+
+<div th:replace="common/header :: body-bottom-scripts " />
+</body>
+
+</html>

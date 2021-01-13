@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.w3.org/1999/xhtml">
+
+<head th:replace="common/header :: common-header"/>
+
+
+<body>
+
+	<!-- Start Header Area -->
+		<div th:replace="common/header :: navbar "/>
+
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>My Orders</h1>
+					<nav class="d-flex align-items-center">
+						<a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>        
+						<a th:href="@{/userOrder}">My Orders</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Order Details Area =================-->
+	<section class="order_details section_gap">
+		<div class="container">
+<div class="alert alert-success">
+					<h3>
+						<i class="fa fa-check" aria-hidden="true"
+							style="color: limegreen;"></i> Thank you, your order has been
+						placed.
+					</h3>
+					<h4>
+						The estimated delivery date is <span
+							th:text="${estimatedDeliveryDate}"></span>
+					</h4>
+				</div>
+				
+			<div class="row order_d_inner">
+				<div class="col-lg-4">
+					<div class="details_item">
+						<h4>Order Info</h4>
+						<ul class="list">
+							<li><a href="#"><span>Order number</span> <span th:text="' : POSTERHOUSE'+${order.id}"></span></a></li>
+							<li><a href="#"><span>Date</span> <span th:text="' : '+${order.orderDate}"></span></a></li>
+							<li><a href="#"><span>Total</span> <span th:with="total=${order.orderTotal+50.00}" th:text="' : '+${total}"></span></a></li>
+							<li><a href="#"><span>Payment method</span> : Online Payment</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="details_item">
+						<h4>Billing Address</h4>
+						<ul class="list">
+							<li><a href="#"><span>Street</span><span th:text="' : '+${order.billingAddress.billingAddressStreet1}+' '+${order.billingAddress.billingAddressStreet2}"></span></a></li>
+							<li><a href="#"><span>City</span> <span th:text="' : '+${order.billingAddress.billingAddressCity}"></span></a></li>
+							<li><a href="#"><span>State</span><span th:text="' : '+${order.billingAddress.billingAddressState}"></span></a></li>
+							<li><a href="#"><span>Postcode </span><span th:text="' : '+${order.billingAddress.billingAddressZipcode}"></span>
+</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="details_item">
+						<h4>Shipping Address</h4>
+						<ul class="list">
+							<li><a href="#"><span>Street</span> <span th:text="' : '+${order.shippingAddress.shippingAddressStreet1}+' '+${order.shippingAddress.shippingAddressStreet2}"></span></a></li>
+							<li><a href="#"><span>City</span> <span th:text="' : '+${order.shippingAddress.shippingAddressCity}"></span></a></li>
+							<li><a href="#"><span>State</span><span th:text="' : '+${order.shippingAddress.shippingAddressState}"></span></a></li>
+							<li><a href="#"><span>Postcode </span><span th:text="' : '+${order.shippingAddress.shippingAddressZipcode}"></span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="order_details_table">
+				<h2>Order Details</h2>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Product</th>
+								<th scope="col"> Size</th>
+								<th scope="col">Quantity</th>
+								<th scope="col">Total</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="cartItem : ${cartItemList}">
+								<td>
+									<p data-th-text="${cartItem.product.productName}"></p>
+								</td>
+								<td>
+									<h5 data-th-text="'x '+${cartItem.size}"></h5>
+								</td>
+								<td>
+									<h5 data-th-text="'x '+${cartItem.qty}"></h5>
+								</td>
+								<td>
+									<p data-th-text="'Rs.'+${cartItem.subtotal}"></p>
+								</td>
+							</tr>
+														
+							<tr>
+							<td></td>
+							<td></td>
+								<td>
+									<h4>Subtotal</h4>
+								</td>
+								
+								<td>
+									<p th:text="'Rs.'+${order.orderTotal}"></p>
+								</td>
+							</tr>
+							<tr>
+							<td></td>
+							<td></td>
+								<td>
+									<h4>Shipping</h4>
+								</td>
+								
+								<td>
+									<p>Flat rate: Rs.50.00</p>
+								</td>
+							</tr>
+							<tr>
+							<td></td>
+							<td></td>
+								<td>
+									<h4>GrandTotal</h4>
+								</td>
+								
+								<td>
+									<p  th:text="${'Rs.'+order.finalPrice}"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Order Details Area =================-->
+
+	<!-- start footer Area -->
+			<div th:replace="common/header :: footer "/>
+
+	<!-- End footer Area -->
+
+
+<div th:replace="common/header :: body-bottom-scripts " />
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.w3.org/1999/xhtml">
+
+<head th:replace="common/header :: common-header">
+    <title>Poster House | Register</title>
+
+  </head>
+
+<body>
+
+    <!-- Start Header Area -->
+	<div th:replace="common/header :: navbar "/>
+	
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Home</h1>
+                    <nav class="d-flex align-items-center">
+                        <a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+<div class="container">
+<div>
+						<h2 class="alert alert-warning">something went wrong.Please Go to Home Page and please try again.</h2>
+					</div>
+
+</div>
+</section>
+<br></br>
+
+    <!-- start footer Area -->
+    <section>
+			<div th:replace="common/header :: footer "/>
+</section>
+    <!-- End footer Area -->
+
+
+<div th:replace="common/header :: body-bottom-scripts " />
+</body>
+</html>

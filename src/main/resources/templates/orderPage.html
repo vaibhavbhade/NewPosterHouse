@@ -1,0 +1,64 @@
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header"/>
+
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<div class="container">
+
+			<div th:replace="common/header :: navbar "/>
+	
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1> My Orders</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="login.html">Your Account</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+    <section class="cart_area">
+
+
+                               <table class="table">
+                                                 <thead>
+											<tr>
+												<th scope="col">Order Date</th>
+												<th scope="col">Order Number</th>
+												<th scope="col">Total</th>
+												<th scope="col">Estimate Delivery Date</th>
+												
+												<th scope="col">Status</th>
+												<th scope="col">Opreation</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="order : ${orderList}">
+												<td><a th:href="@{/orderDetail(id=${order.id})}"><span
+														th:text="${order.orderDate}"></span></a></td>
+												<td data-th-text="${'#PosterHouse'+order.id}"></td>
+												<td data-th-text="${order.finalPrice}"></td>
+												<td data-th-text="${order.estimateDate}"></td>
+												<td data-th-text="${order.orderStatus}"></td>
+												<td > <a th:href="@{/orderDetail(id=${order.id})}" class="genric-btn primary">Order Details</a>&nbsp;<a href="#"class="genric-btn danger">Cancel Order</a></td>
+											</tr>
+																							</hr>
+											
+										</tbody> 
+
+                      </table>
+                      </section>
+                      
+                    </div>  
+                          <!-- start footer Area -->
+    		
+			<div th:replace="common/header :: footer "/>
+	<div th:replace="common/header :: body-bottom-scripts " />
+	
+</body>
+</html>

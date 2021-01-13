@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "log4j.logger.org.hibernate.SQL",
+    "type": "java.lang.String",
+    "description": "A description for 'log4j.logger.org.hibernate.SQL'"
+  },
+  {
+    "name": "paytm.payment.sandbox.merchant-id.generate your own merchant-id",
+    "type": "java.lang.String",
+    "description": "A description for 'paytm.payment.sandbox.merchant-id.generate your own merchant-id'"
+  }
+]}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.w3.org/1999/xhtml">
+
+<head th:replace="common/header :: common-header"/>
+
+
+<body>
+
+	<!-- Start Header Area -->
+		<div th:replace="common/header :: navbar "/>
+    <!-- End Header Area -->
+
+
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Login</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="login.html">Login</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+
+
+	<!--================Login Box Area =================-->
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src="img/login.jpg" alt="">
+						<div class="hover">
+							<h4>New to our website?</h4>
+							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+							<a class="primary-btn" th:href="@{/registration}">Create an Account</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner">
+						<h3>Log in to enter</h3>
+						<a th:href="@{/oauth2/authorization/google}" class="google btn"><i class="fa fa-google fa-fw">
+          </i> Login with Google
+          
+        </a>
+        <br>
+        &nbsp;
+        
+        <div class="content">
+  <p class="or">or</p>
+</div>
+        <div th:if="${emailNotExists}" class="alert alert-danger"><strong>Email doesn't exist.</strong></div>
+									
+									<div th:if="${forgetPasswordEmailSent}" class="alert alert-success"><strong>Email sent!!</strong></div>
+		
+        <div th:if="${param.error != null}" class="alert alert-danger" ><p class="text-danger">Incorrect username or password.</p></div>
+								
+						<form class="row login_form" th:action="@{/login}" method="post" id="contactForm" novalidate="novalidate">
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="username" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+							</div>
+							<div class="col-md-12 form-group">
+								<div class="creat_account">
+									<input type="checkbox" id="f-option2" name="selector">
+									<label for="f-option2">Keep me logged in</label>
+								</div>
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" value="submit" class="primary-btn">Log In</button>
+								<a href="#" data-toggle="modal" data-target="#myModal" >Forgot Password?</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content" >
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body" style=" font-size: 100%;
+   font-family: 'Roboto', sans-serif;
+">
+          <div class="elelment">
+	<h2>Reset Your Password</h2>
+	<div class="element-main">
+		<p> </p>
+		<div th:if="${emailNotExists}" class="alert alert-danger"><strong>Email doesn't exist.</strong></div>
+									
+									<div th:if="${forgetPasswordEmailSent}" class="alert alert-success"><strong>Email sent!!</strong></div>
+									
+									&nbsp;
+		<form th:action="@{/forgetPassword}" method="post">
+			<input type="text" id="recoverEmail" name="email" value="Your e-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your e-mail address';}" required="required">
+			<input type="submit" value="Reset my Password">
+		</form>
+	</div>
+</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+	<!-- start footer Area -->
+			<div th:replace="common/header :: footer "/>
+
+	<!-- End footer Area -->
+
+<div th:replace="common/header :: body-bottom-scripts " />
+</body>
+
+</html>
