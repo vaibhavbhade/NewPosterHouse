@@ -45,7 +45,7 @@
 												<td data-th-text="${order.finalPrice}"></td>
 												<td data-th-text="${order.estimateDate}"></td>
 												<td data-th-text="${order.orderStatus}"></td>
-												<td > <a th:href="@{/orderDetail(id=${order.id})}" class="genric-btn primary">Order Details</a>&nbsp;<a href="#"class="genric-btn danger">Cancel Order</a></td>
+												<td > <a th:href="@{/orderDetail(id=${order.id})}" class="genric-btn primary">Order Details</a>&nbsp;<a  th:if="${order.orderStatus!= 'Delivered' }"    href="#"class="genric-btn danger">Cancel Order</a></td>
 											</tr>
 																							</hr>
 											

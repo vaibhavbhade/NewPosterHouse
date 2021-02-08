@@ -63,12 +63,12 @@
 		
         <div th:if="${param.error != null}" class="alert alert-danger" ><p class="text-danger">Incorrect username or password.</p></div>
 								
-						<form class="row login_form" th:action="@{/login}" method="post" id="contactForm" novalidate="novalidate">
+						<form class="row login_form" th:action="@{/login}" method="post" id="contactForm" >
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="username" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+								<input type="text" class="form-control" id="username" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required="required">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<input type="text" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required="required">
 							</div>
 							<div class="col-md-12 form-group">
 								<div class="creat_account">
@@ -77,7 +77,8 @@
 								</div>
 							</div>
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="primary-btn">Log In</button>
+								<button type="submit"  value="submit" class="primary-btn">Log In</button>
+								<div class="spinner-border"></div>
 								<a href="#" data-toggle="modal" data-target="#myModal" >Forgot Password?</a>
 							</div>
 						</form>

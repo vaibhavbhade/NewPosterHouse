@@ -117,7 +117,13 @@ public class CheckOutController {
 				if (cartId.longValue() != user.getShoppingCart().getId().longValue()) {
 					return "badRequestPage";
 				}
-				System.out.println("########################################");
+				
+				if(Grandorder.getId() != null) {
+					System.out.println("delete by id   ::::  "+Grandorder.getId());
+					orderService.deleteOrderById(Grandorder);
+				}
+				
+				System.out.println("######################################## :::::  "+Grandorder.getId());
 				List<CartItem> cartItemList = cartItemService.findByShoppingCart(user.getShoppingCart());
 
 				if (cartItemList.size() == 0) {
@@ -262,7 +268,7 @@ public class CheckOutController {
 				parameters.put("MOBILE_NO", env.getProperty("paytm.mobile"));
 				parameters.put("EMAIL", env.getProperty("paytm.email"));
 				parameters.put("ORDER_ID", OrderId);// order.getFinalPrice().toString()
-				parameters.put("TXN_AMOUNT",  "5");
+				parameters.put("TXN_AMOUNT",  "1");
 				parameters.put("CUST_ID", order.getUser().getId().toString());
 				String checkSum = getCheckSum(parameters);
 				parameters.put("CHECKSUMHASH", checkSum);
@@ -431,7 +437,7 @@ public class CheckOutController {
 					model.addAttribute("parameters", parameters);
 					orderService.deleteOrderById(Grandorder);
 					Grandorder=null;
-
+System.out.println("###################################################################");
 					return "redirect:/checkout?id=" + user.getShoppingCart().getId() + "&missingRequiredField=true";
 				}
 			} else {
@@ -440,6 +446,8 @@ public class CheckOutController {
 				model.addAttribute("parameters", parameters);
 				orderService.deleteOrderById(Grandorder);
 				Grandorder=null;
+				System.out.println("################################################################### kkkkkkkkk");
+
 				return "redirect:/checkout?id=" + user.getShoppingCart().getId() + "&missingRequiredField=true";
 
 			}
@@ -449,6 +457,8 @@ public class CheckOutController {
 		model.addAttribute("result", result);
 		parameters.remove("CHECKSUMHASH");
 		model.addAttribute("parameters", parameters);
+		System.out.println("################################################################### hhhhhhhhhhhhhh");
+
 		return "redirect:/checkout?id=" + user.getShoppingCart().getId() + "&missingRequiredField=true";
 	}
 }

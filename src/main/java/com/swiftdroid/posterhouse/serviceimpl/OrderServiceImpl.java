@@ -33,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
 	
 	@SuppressWarnings("deprecation")
 	@Override
+	@Transactional
 	public synchronized Order   createOrder(ShoppingCart shoppingCart, ShippingAddress shippingAddress, BillingAddress billingAddress,
 			String shippingMethod, User user) {
 		Order order = new Order();
