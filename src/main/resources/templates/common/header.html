@@ -285,8 +285,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		function addMoreImage(){		
 		    /* var el = $(".divUploadImage").get(0); */	     
 		    /* var nextProduct = $(el).after(el.cloneNode(true)); */	
-		    
-
+		 
 		
 		
 		    var x = document.getElementById("btnUpload"+productID);
@@ -301,7 +300,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	
 	        nextProduct.find('input').eq(0).attr({
 	            id: 'btnUpload' + productID,
-	            
 	        });
 	        nextProduct.find('a').eq(0).attr({
 	            id: 'btnDelete' + productID,
@@ -323,6 +321,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			z.style.display = "none";
 		}
 		function uploadImage(){
+			 
 			var x = document.getElementById("btnUpload"+productID);
 			x.style.display = "none";
 			var y = document.getElementById("btnAddMore"+productID);

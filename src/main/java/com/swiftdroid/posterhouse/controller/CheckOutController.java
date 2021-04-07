@@ -396,13 +396,14 @@ public class CheckOutController {
 	public void moveFile(Order order, User user) {
 
 		List<CartItem> CartItemList = order.getCartItemList();
-
+		String format="";
 		for (CartItem cartItem : CartItemList) {
 			Product product = cartItem.getProduct();
 			for (int i = 1; i <= cartItem.getQty(); i++) {
 
 				String fileName = user.getShoppingCart().getId() + "_" + product.getId() +"_"+i +"_.png";
 				Path sourceFilePath = Paths.get("src/main/resources/static/img/user/userproductImage/" + fileName);
+				 format=new SimpleDateFormat("yyyyMMddHHmmssSSS").format(order.getOrderDate());
 				String newfileName = user.getId() + "_" + product.getId() + "_" + order.getId() + "_"+i+"_"+new SimpleDateFormat("yyyyMMddHHmmssSSS'.png'").format(order.getOrderDate());
 				Path targetFilePath = Paths.get("src/main/resources/static/img/user/userproductImage/" + newfileName);
 
@@ -415,6 +416,8 @@ public class CheckOutController {
 				}
 			}
 		}
+		order.setDownloadpath(format);
+		orderService.saveOrderWithUpdate(order);
 
 	}
 

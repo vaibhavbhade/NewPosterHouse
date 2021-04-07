@@ -35,6 +35,8 @@ public class Order {
 	private Long tackingId;
 
 	private boolean delhiveryStatus;
+	private String downloadpath;
+
 
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
@@ -185,6 +187,14 @@ public class Order {
 
 	public void setDelhiveryStatus(boolean delhiveryStatus) {
 		this.delhiveryStatus = delhiveryStatus;
+	}
+
+	public String getDownloadpath() {
+		return downloadpath;
+	}
+
+	public void setDownloadpath(String downloadpath) {
+		this.downloadpath = downloadpath;
 	}
 
 	
