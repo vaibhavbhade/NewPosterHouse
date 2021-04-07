@@ -3,6 +3,7 @@ package com.swiftdroid.posterhouse.service;
 import java.util.List;
 
 import com.swiftdroid.posterhouse.model.CartItem;
+import com.swiftdroid.posterhouse.model.Order;
 import com.swiftdroid.posterhouse.model.Product;
 import com.swiftdroid.posterhouse.model.ProductConfig;
 import com.swiftdroid.posterhouse.model.ShoppingCart;
@@ -21,6 +22,8 @@ public interface CartItemService {
 	public void removeCartItem(CartItem cartItem);
 
 	void saveCart(CartItem cartItem);
+
+	List<CartItem> findByOrder(Order order);
 
 	
 }

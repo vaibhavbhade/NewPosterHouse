@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import com.swiftdroid.posterhouse.model.CartItem;
+import com.swiftdroid.posterhouse.model.Order;
 import com.swiftdroid.posterhouse.model.ShoppingCart;
 
 public interface CartItemRepository extends CrudRepository<CartItem, Long> {
 
 	public List<CartItem> findByShoppingCart(ShoppingCart shoppingCart);
+	public List<CartItem> findByOrder(Order Order);
+	
 }

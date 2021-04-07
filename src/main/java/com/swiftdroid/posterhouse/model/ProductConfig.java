@@ -83,7 +83,7 @@ public class ProductConfig  {
 	private int availibility;
 
 	@Column(name = "IA")
-	private boolean isActive=true;
+	private boolean status;
 	
 	@Column(name = "CD")
 	@CreationTimestamp
@@ -224,13 +224,7 @@ public class ProductConfig  {
 		this.availibility = availibility;
 	}
 
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+	
 
 	public Date getCretedDate() {
 		return cretedDate;
@@ -274,6 +268,16 @@ public class ProductConfig  {
 	public void setProductToCartItemList(List<ProductToCartItem> productToCartItemList) {
 		ProductToCartItemList = productToCartItemList;
 	}
+	
+	
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
@@ -282,7 +286,7 @@ public class ProductConfig  {
 				+ ", size=" + size + ", WIDTH=" + WIDTH + ", HEIGHT=" + HEIGHT + ", DEPTH=" + DEPTH
 				+ ", weightOfProduct=" + weightOfProduct + ", totalWeight=" + totalWeight + ", pricePerQty="
 				+ pricePerQty + ", pricePerFace=" + pricePerFace + ", durationToMake=" + durationToMake
-				+ ", availibility=" + availibility + ", isActive=" + isActive + ", cretedDate=" + cretedDate
+				+ ", availibility=" + availibility + ", isActive=" + status + ", cretedDate=" + cretedDate
 				+ ", cretedBy=" + cretedBy + ", modifiedDate=" + modifiedDate + ", modifiedBy=" + modifiedBy + "]";
 	}
 	

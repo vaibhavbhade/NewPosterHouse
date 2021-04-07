@@ -83,11 +83,28 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	@Transactional
-
+@Transactional
 	public void deleteOrderById(Order order) {
 		// TODO Auto-generated method stub
-	orderRepository.delete(order);
+		  List<CartItem> cartItemList = cartItemService.findByOrder(order);{
+			  for (CartItem cartItem : cartItemList) {
+					cartItem.setOrder(null);
+					cartItemService.saveCart(cartItem);
+				}
+		  }
+	orderRepository.deleteById(order.getId());
+	}
+	
+	@Override
+	public Order saveOrderWithUpdate(Order order) {
+		// TODO Auto-generated method stub
+		return orderRepository.save(order);
+	}
+
+	@Override
+	public Order findOrderByTrackingId(Long id) {
+		// TODO Auto-generated method stub
+		return orderRepository.findByTackingId(id);
 	}
 
 }

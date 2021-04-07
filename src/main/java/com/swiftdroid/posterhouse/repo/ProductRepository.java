@@ -16,7 +16,10 @@ public List<Product> findByproductType(ProductType productType);
 public long productCount(@Param("key")long id);
 
 public List<Product> findFirst4ByproductType(ProductType productType);
+
 public  List<Product> findByproductNameContaining(String title);
+
+public  List<Product> findByStatus(Boolean status);
 
 
 }

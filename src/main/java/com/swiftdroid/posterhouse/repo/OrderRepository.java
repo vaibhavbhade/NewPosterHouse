@@ -10,4 +10,6 @@ import com.swiftdroid.posterhouse.model.User;
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
 	List<Order> findOrderByUser(User user);
+	
+     Order findByTackingId(Long id);
 }

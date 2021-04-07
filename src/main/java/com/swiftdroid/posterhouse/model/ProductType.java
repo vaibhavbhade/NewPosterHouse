@@ -52,7 +52,12 @@ public class ProductType {
 	@Column(name = "MB")
 	private String modifiedBy;
 
+   private String catImagePath;
 	
+	private boolean bannerImageStatus;
+	
+	private String bannerImagePath;
+	 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "productType", cascade = CascadeType.ALL)
 	  private Set<Product> products = new HashSet<Product>();
 
@@ -160,6 +165,36 @@ public class ProductType {
 
 	public void setProducts(Set<Product> products) {
 		this.products = products;
+	}
+
+
+	public String getCatImagePath() {
+		return catImagePath;
+	}
+
+
+	public void setCatImagePath(String catImagePath) {
+		this.catImagePath = catImagePath;
+	}
+
+
+	public boolean isBannerImageStatus() {
+		return bannerImageStatus;
+	}
+
+
+	public void setBannerImageStatus(boolean bannerImageStatus) {
+		this.bannerImageStatus = bannerImageStatus;
+	}
+
+
+	public String getBannerImagePath() {
+		return bannerImagePath;
+	}
+
+
+	public void setBannerImagePath(String bannerImagePath) {
+		this.bannerImagePath = bannerImagePath;
 	}
 
 

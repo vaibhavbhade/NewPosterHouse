@@ -25,7 +25,7 @@ public class ShoppingCartServiceIpml implements ShoppingCartService {
 	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart) {
 		// TODO Auto-generated method stub
 		BigDecimal cartTotal=new BigDecimal(0);
-		BigDecimal finalshippingPriceTotal=new BigDecimal(50);
+		BigDecimal finalshippingPriceTotal=new BigDecimal(0);
 
 		
 		List<CartItem> cartItemList=cartItemService.findByShoppingCart(shoppingCart);		

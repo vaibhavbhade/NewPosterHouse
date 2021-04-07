@@ -19,5 +19,9 @@ public interface OrderService {
 	
 	void deleteOrderById(Order order);
 
+	Order saveOrderWithUpdate(Order order);
+	
+	Order findOrderByTrackingId(Long  id);
+
 
 }

@@ -49,11 +49,11 @@ return encoder;
 		 "/shoppingCart","/img/i1.jpg",
 "/fetchProductBysizeandproductId",
 		 "/","/productDetail",
-		 "/registration",
+		 "/registration","/pgresponse",
 		 "/fetchProduct","/fetchProductCategoryWise",
 		 "/forgetPassword","/newUser",
 		 "/login","/oauth2/**",
-		 "/fonts/**","/searchProduct"
+		 "/fonts/**","/searchProduct","/feedback"
 		
  };
 	

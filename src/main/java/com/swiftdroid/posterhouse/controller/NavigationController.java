@@ -242,7 +242,7 @@ public class NavigationController {
 	
 	
 	@RequestMapping("/productDetail")
-	public String BookDetails(Model model,Principal principal,@PathParam("id") Long id,Authentication authentication ) {
+	public String BookDetails(Model model,Principal principal,@RequestParam("id") Long id,Authentication authentication,@RequestParam(name = "feedback",required = false) boolean feedback ) {
 		
 		if(id==null) {
 			System.out.println(
@@ -306,7 +306,10 @@ public class NavigationController {
 		model.addAttribute("sizeList", sizeList);
 	//	model.addAttribute("size",sizeList.get(0));
 		model.addAttribute("qty", 1);
+	if(feedback){
 		
+		model.addAttribute("feedback",true);
+	}
 		return "single-product";
 		 }
 		 catch (Exception e) {
@@ -325,9 +328,12 @@ public class NavigationController {
 		Map<ProductType,List<Product>> productMapCategory=new HashMap<>();
 		List<ProductType> productTypeList=categoryService.findAllProductType();
 		for (ProductType productType : productTypeList) {
+			if(productService.findTopFourProductCategoryWise(productType).size()>=1) {
 			productMapCategory.put(productType, productService.findTopFourProductCategoryWise(productType));
 		//	System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@"+productService.findTopFourProductCategoryWise(productType).get(0));
-		}
+		
+			}
+			}
 		model.addAttribute("productMapCategory", productMapCategory);
 		model.addAttribute("productTypeList", productTypeList);
 		return "index";
@@ -802,5 +808,3 @@ public class NavigationController {
 	}
 
 }
-
-

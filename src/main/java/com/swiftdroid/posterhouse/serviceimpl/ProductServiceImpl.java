@@ -20,13 +20,25 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAllProduct() {
 		// TODO Auto-generated method stub
-		return (List<Product>) productRepository.findAll();
-	}
+		List<Product> activeproductList=new ArrayList<Product>();
+		 List<Product> productList= (List<Product>) productRepository.findAll();
+		 for (Product product : productList) {
+				if (product.isStatus()) {
+					activeproductList.add(product);
+				}
+			}
+		return activeproductList;	}
 
 	@Override
 	public List<Product> getProductCategoryWise(ProductType productType) {
-		// TODO Auto-generated method stub
-		return productRepository.findByproductType(productType);
+		List<Product> activeproductList=new ArrayList<Product>();
+		 List<Product> productList= productRepository.findByproductType(productType);
+		 for (Product product : productList) {
+				if (product.isStatus()) {
+					activeproductList.add(product);
+				}
+		 }
+		return activeproductList;
 	}
 
 	@Override
@@ -44,15 +56,24 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findTopFourProductCategoryWise(ProductType productType) {
 		// TODO Auto-generated method stub
-		return productRepository.findFirst4ByproductType(productType);
+		List<Product> activeproductList = new ArrayList<>();
+		List<Product> productList = productRepository.findFirst4ByproductType(productType);
+	
+		for (Product product : productList) {
+			if (product.isStatus()) {
+				activeproductList.add(product);
+			}
+		}
+		return activeproductList;
 	}
+		 
 
 	public List<Product> blurrySearch(String title) {
 		List<Product> productList = productRepository.findByproductNameContaining(title);
 		List<Product> activeproductList = new ArrayList<>();
 
 		for (Product product : productList) {
-			if (product.isEnable()) {
+			if (product.isStatus()) {
 				activeproductList.add(product);
 			}
 		}

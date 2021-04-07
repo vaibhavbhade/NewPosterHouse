@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.w3.org/1999/xhtml">
+
+<head th:replace="common/header :: common-header"/>
+
+
+<body>
+
+	<!-- Start Header Area -->
+		<div th:replace="common/header :: navbar "/>
+
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1> Order Details</h1>
+					<nav class="d-flex align-items-center">
+						<a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>        
+						<a th:href="@{/userOrder}">My Orders</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<section class="cart_area">
+
+
+                               <table class="table" style=" width: 100%; height: 70px;">
+                               <thead>
+	<tr>
+		<th style="text-align:center">Status</th>
+		<th style="text-align:center">StatusLocation</th>
+		<th style="text-align:center">StatusDateTime</th>
+		<th style="text-align:center">Instructions</th>
+		<th style="text-align:center">StatusType</th>
+		<th style="text-align:center">StatusCode</th>
+		
+	</tr></thead>
+	<tbody>
+		<tr>
+			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.status}"></td>
+			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.statusLocation}"></td>
+			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.statusDateTime}"></td>
+			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.instructions}"></td>
+			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.statusType}"></td>
+			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.status}"></td> 
+			
+		</tr>
+		</tbody>
+</table>
+
+<br>
+
+
+<table class="table">
+<thead>
+	<tr>
+		<th style="text-align:center">ScanDateTime</th>
+		<th style="text-align:center">ScanType</th>
+		<th style="text-align:center">Scan</th>
+		<th style="text-align:center">StatusDateTime</th>
+		<th style="text-align:center">ScannedLocation</th>
+		<th style="text-align:center">Instructions</th>
+		<th style="text-align:center">StatusCode</th>
+		
+		
+	</tr></thead>
+	
+	<tbody  >
+	<tr th:each="list:${shipmentTrackLists.shipment.scans}">
+		<td style="text-align:center" th:text="${list.scanDetail.scanDateTime}"></td>
+		<td style="text-align:center" th:text="${list.scanDetail.scanType}"></td>
+		<td style="text-align:center" th:text="${list.scanDetail.scan}"></td>
+		<td style="text-align:center" th:text="${list.scanDetail.statusDateTime}"></td>
+		<td style="text-align:center" th:text="${list.scanDetail.scannedLocation}"></td>
+		<td style="text-align:center" th:text="${list.scanDetail.instructions}"></td>
+		<td style="text-align:center" th:text="${list.scanDetail.statusCode}"></td>
+		</tr>
+	</tbody> 
+		
+</table>
+
+</section>
+
+			<div th:replace="common/header :: footer "/>
+	<div th:replace="common/header :: body-bottom-scripts " />
+</body>
+</html>

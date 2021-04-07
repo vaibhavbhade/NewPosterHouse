@@ -31,19 +31,26 @@ public class Order {
 	private BigDecimal orderTotal;
 	private LocalDate estimateDate;
 	private BigDecimal finalPrice;
+	
+	private Long tackingId;
+
+	private boolean delhiveryStatus;
 
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
 
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "order")
 	private List<CartItem> cartItemList;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL )
 	private ShippingAddress shippingAddress;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private BillingAddress billingAddress;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	private UserPayment userPayment;
+	
 	/*
 	 * @OneToOne(cascade=CascadeType.ALL) private Payment payment;
 	 * 
@@ -156,4 +163,30 @@ public class Order {
 		this.createdDate = createdDate;
 	}
 
+	public UserPayment getUserPayment() {
+		return userPayment;
+	}
+
+	public void setUserPayment(UserPayment userPayment) {
+		this.userPayment = userPayment;
+	}
+
+	public Long getTackingId() {
+		return tackingId;
+	}
+
+	public void setTackingId(Long tackingId) {
+		this.tackingId = tackingId;
+	}
+
+	public boolean isDelhiveryStatus() {
+		return delhiveryStatus;
+	}
+
+	public void setDelhiveryStatus(boolean delhiveryStatus) {
+		this.delhiveryStatus = delhiveryStatus;
+	}
+
+	
+	
 }

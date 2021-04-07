@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.websocket.server.PathParam;
@@ -52,8 +53,17 @@ public class OrderController {
 			user = userService.findByUsername(principal.getName());
 		} finally {
 			try {
+				List<Order> finalorderList =new ArrayList<Order>();
 				List<Order> orderList = user.getOrderList();
-				model.addAttribute("orderList", orderList);
+				for (Order order : orderList) 
+					if(order.getUserPayment() != null) {
+						finalorderList.add(order);
+					}
+					else {
+						orderService.deleteOrderById(order);
+					}
+				
+				model.addAttribute("orderList", finalorderList);
 				model.addAttribute("user", user);
 				return "orderPage";
 			} catch (Exception e) {
@@ -85,7 +95,7 @@ public class OrderController {
 
 			try {
 				Order order = orderService.findOrderById(orderId);
-
+				System.out.println("order.getUserPayment()==null : "+order.getUserPayment()==null);
 				if (order.getUser().getId().longValue() != user.getId().longValue()) {
 					return "badRequestPage";
 				}
@@ -96,6 +106,12 @@ public class OrderController {
 				model.addAttribute("order", order);
 				model.addAttribute("estimatedDeliveryDate", order.getEstimateDate());
 				model.addAttribute("cartItemList", order.getCartItemList());
+				System.out.println("order.getUserPayment()==null : "+order.getUserPayment()==null);
+				if(order.getUserPayment()==null) {
+					model.addAttribute("paymentFail",true);
+				}else {
+					model.addAttribute("paymentFail",false);
+				}
 
 				return "orderDetails";
 			} catch (Exception e) {

@@ -18,7 +18,7 @@ public class ShippingAddress {
 	private String ShippingAddressState;
 	private String ShippingAddressCountry;
 	private String ShippingAddressZipcode;
-	
+	private String phone;
 	
 	@OneToOne
 	private Order order;
@@ -113,4 +113,16 @@ public class ShippingAddress {
 		this.order = order;
 	}
 
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	
+	
 }

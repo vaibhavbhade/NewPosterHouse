@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.swiftdroid.posterhouse.model.CartItem;
+import com.swiftdroid.posterhouse.model.Order;
 import com.swiftdroid.posterhouse.model.Product;
 import com.swiftdroid.posterhouse.model.ProductConfig;
 import com.swiftdroid.posterhouse.model.ProductToCartItem;
@@ -35,7 +36,7 @@ public class CartItemServiceImpl  implements CartItemService
 	@Override
 	public CartItem updateCartItem(CartItem cartItem) {
 		BigDecimal bigDecimal=new BigDecimal(cartItem.getProductConfig().getPricePerQty()).multiply(new BigDecimal(cartItem.getQty()));
-		BigDecimal finalbigDecimal=new BigDecimal(50);
+		BigDecimal finalbigDecimal=new BigDecimal(00);
 		bigDecimal =bigDecimal.setScale(2,BigDecimal.ROUND_HALF_UP);
 		 cartItem.setSubtotal(bigDecimal);
           cartItemRepository.save(cartItem);
@@ -49,7 +50,7 @@ public class CartItemServiceImpl  implements CartItemService
 			
 			for (CartItem cartItem : cartItemList) {
 				if(productConfig.getId() == cartItem.getProductConfig().getId()) {
-					cartItem.setQty(cartItem.getQty()+qty);
+					cartItem.setQty(qty);
 					cartItem.setSubtotal(new BigDecimal(productConfig.getPricePerQty()).multiply(new BigDecimal(qty)));
 					cartItemRepository.save(cartItem);
 					return cartItem;
@@ -110,6 +111,10 @@ public class CartItemServiceImpl  implements CartItemService
 		cartItemRepository.save(cartItem);
 	}
 
-
+	@Override
+	public List<CartItem> findByOrder(Order order) {
+		// TODO Auto-generated method stub
+		return cartItemRepository.findByOrder(order);
+	}
 
 }

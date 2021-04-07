@@ -25,6 +25,9 @@
 
 		============================================= -->
 
+<!-- <link th:href="@{css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{css/dataTables.bootstrap.min.css}" rel="stylesheet" /> -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -110,7 +113,6 @@
 					
 								<li class="nav-item"><a class="nav-link"
 									th:href="@{https://staging-express.delhivery.com/api/v1/packages/json/?waybill=3434342&token=4234567654345678
-
 }">Track Order</a></li>
 								<li class="nav-item"><a class="nav-link"
 									th:href="@{/userOrder}">My Order</a></li>
@@ -143,13 +145,14 @@
 								</li>
 							
 								<li class="nav-item">	<a th:href="@{/cart}" class="cart"><span
-										class="ti-bag"> 01</span></a></li>
+										class="ti-bag"> </span></a></li>
 							</ul>
 
 						</div>
 					</div>
 				</nav>
 			</div>
+			
 			<div class="search_input" id="search_input_box">
 				<div class="container">
 					<form th:action="@{/searchProduct}" method="post" class="d-flex justify-content-between">
@@ -266,6 +269,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		<script th:src="@{js/owl.carousel.min.js}"></script>
 				<script th:src="@{js/ajax.js}"></script>
 		
+<!-- 		<script th:src="@{js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{js/dataTables.bootstrap.min.js}"></script> -->
 		<!--gmaps Js-->
 		<script
 		
@@ -274,7 +279,72 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		<script th:src="@{js/main.js}"></script>
 		<script th:src="@{/js/scripts.js}"></script>
 		<script th:src="@{js/demo.js}"></script>
+		<script type="text/javascript">	 
+
+    	var productID = 1;
+		function addMoreImage(){		
+		    /* var el = $(".divUploadImage").get(0); */	     
+		    /* var nextProduct = $(el).after(el.cloneNode(true)); */	
+		    
+
 		
+		
+		    var x = document.getElementById("btnUpload"+productID);
+			x.style.display = "none";
+			var y = document.getElementById("btnAddMore"+productID);
+			y.style.display = "none";
+			var z = document.getElementById("btnDelete"+productID);
+			z.style.display = "block";
+			
+		    var nextProduct = $(".divUploadImage" + productID).clone();
+	        nextProduct.removeClass('divUploadImage' + productID).addClass('divUploadImage' + (++productID));
+	
+	        nextProduct.find('input').eq(0).attr({
+	            id: 'btnUpload' + productID,
+	            
+	        });
+	        nextProduct.find('a').eq(0).attr({
+	            id: 'btnDelete' + productID,
+	            name: 'btnDelete' + productID
+	        });
+	        nextProduct.find('a').eq(1).attr({
+	            id: 'btnAddMore' + productID,
+	            name: 'btnAddMore' + productID
+	        });
+	
+	        $('.div_row').append(nextProduct);
+
+
+		    var x = document.getElementById("btnUpload"+productID);
+			x.style.display = "block";
+			var y = document.getElementById("btnAddMore"+productID);
+			y.style.display = "none";
+			var z = document.getElementById("btnDelete"+productID);
+			z.style.display = "none";
+		}
+		function uploadImage(){
+			var x = document.getElementById("btnUpload"+productID);
+			x.style.display = "none";
+			var y = document.getElementById("btnAddMore"+productID);
+			y.style.display = "block";
+			var z = document.getElementById("btnDelete"+productID);
+			z.style.display = "block";
+		}
+		function deleteImage(){
+			
+		}
+		
+		/* function showImageThumbnailFirst(fileInput){
+			//alert("ready");
+
+
+			$(document).ready(function(){
+				$('#btnUpload1').change(function(){
+					alert("ready");
+					showImageThumbnailFirst(this);
+				});
+			} */
+	  </script>
 	</div>
 </body>
 </html>

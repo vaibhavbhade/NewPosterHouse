@@ -31,14 +31,23 @@
 	<section class="order_details section_gap">
 		<div class="container">
 <div class="alert alert-success">
-					<h3>
+					<h3 th:if="${!paymentsFail}">
 						<i class="fa fa-check" aria-hidden="true"
 							style="color: limegreen;"></i> Thank you, your order has been
 						placed.
 					</h3>
-					<h4>
+						<h3 th:if="${paymentsFail}">
+						<i class="fa fa-check" aria-hidden="true"
+							style="color: limegreen;"></i> Thank you, your order has been
+						placed.
+					</h3>
+					<h4 th:if="${!paymentsFail} ">
 						The estimated delivery date is <span
 							th:text="${estimatedDeliveryDate}"></span>
+					</h4>
+					<h4 th:if="${!paymentsFail}">
+						Transaction ID<span
+							th:text="${order.userPayment.TXNID}"></span>
 					</h4>
 				</div>
 				
@@ -126,7 +135,7 @@
 								</td>
 								
 								<td>
-									<p>Flat rate: Rs.50.00</p>
+									<p>FREE</p>
 								</td>
 							</tr>
 							<tr>

@@ -21,9 +21,8 @@ import com.swiftdroid.posterhouse.repo.UserRepository;
 import com.swiftdroid.posterhouse.repo.UserShippingRepository;
 import com.swiftdroid.posterhouse.service.UserService;
 
-
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -31,8 +30,7 @@ public class UserServiceImpl implements UserService{
 	private RoleRepostiory roleRepostiory;
 	@Autowired
 	UserShippingRepository userShippingRepository;
-	
-	
+
 	@Override
 	public User findByUsername(String username) {
 		// TODO Auto-generated method stub
@@ -48,35 +46,35 @@ public class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 
-	public User createUser(User user, Set<UserRole> userRoles){
-		User localUser=userRepository.findByUsername(user.getUsername());
-		
-		if(localUser != null) {
-		//	throw new Exception("User already exists.Nothing will be done.");
-		//	LOG.info("User {} already exists.Nothing will be done.",user.getUsername());
-		}
-		else {
+	public User createUser(User user, Set<UserRole> userRoles) {
+		User localUser = userRepository.findByUsername(user.getUsername());
+
+		if (localUser != null) {
+			// throw new Exception("User already exists.Nothing will be done.");
+			// LOG.info("User {} already exists.Nothing will be done.",user.getUsername());
+		} else {
 			for (UserRole ur : userRoles) {
-			roleRepostiory.save(ur.getRole());
+				roleRepostiory.save(ur.getRole());
 			}
-			
+
 		}
-		
+
 		user.getUserRoles().addAll(userRoles);
-		
-		ShoppingCart shoppingCart=new ShoppingCart();
-		
-        	shoppingCart.setUser(user);
-		
+
+		ShoppingCart shoppingCart = new ShoppingCart();
+
+		shoppingCart.setUser(user);
+
 		user.setShoppingCart(shoppingCart);
-		
+
 		user.setUserShippingList(new ArrayList<UserShipping>());
-		
-	///	user.setUserPaymentList(new ArrayList<UserPayment>());
-		localUser=userRepository.save(user);
-		
-return localUser;
-		}
+
+		/// user.setUserPaymentList(new ArrayList<UserPayment>());
+		localUser = userRepository.save(user);
+
+		return localUser;
+
+	}
 
 	@Override
 	public User save(User user) {
@@ -87,49 +85,49 @@ return localUser;
 	@Override
 	@Transactional
 
-	public User createNewUserAfterSuccessHandler(String email,String name,AuthenticationProvider provider) {
+	public User createNewUserAfterSuccessHandler(String email, String name, AuthenticationProvider provider) {
 		// TODO Auto-generated method stub
-		User user=new User();
+		User user = new User();
 		user.setEmail(email);
 		user.setFirstName(name);
 		user.setCretedBy(name);
 		user.setCretedDate(new Date());
 		user.setUsername(email);
 		user.setAuthProvider(provider);
-		
-		Role role=new Role();
+
+		Role role = new Role();
 		role.setRoleId(1);
 		role.setName("ROLE_USER");
-		
-		Set<UserRole> userRoles=new HashSet<>();
-		
+
+		Set<UserRole> userRoles = new HashSet<>();
+
 		for (UserRole ur : userRoles) {
 			roleRepostiory.save(ur.getRole());
-			}
-		
-		userRoles.add( new UserRole(user,role));
+		}
+
+		userRoles.add(new UserRole(user, role));
 		user.getUserRoles().addAll(userRoles);
-		ShoppingCart shoppingCart=new ShoppingCart();
-		
-    	shoppingCart.setUser(user);
-	
-	    user.setShoppingCart(shoppingCart);
-	
-	    user.setUserShippingList(new ArrayList<UserShipping>());
-	
-	    User localUser=userRepository.save(user);
-	    
+		ShoppingCart shoppingCart = new ShoppingCart();
+
+		shoppingCart.setUser(user);
+
+		user.setShoppingCart(shoppingCart);
+
+		user.setUserShippingList(new ArrayList<UserShipping>());
+
+		User localUser = userRepository.save(user);
+
 		return localUser;
 	}
 
 	@Override
-	public void updateExistingUserAfterAuth2User(User user,String name, AuthenticationProvider provider) {
+	public void updateExistingUserAfterAuth2User(User user, String name, AuthenticationProvider provider) {
 		// TODO Auto-generated method stub
 		user.setFirstName(name);
 		user.setAuthProvider(provider);
 		user.setModifiedBy(name);
 		user.setModifiedDate(new Date());
-		
+
 		save(user);
 	}
 
@@ -139,26 +137,25 @@ return localUser;
 		userShipping.setUser(user);
 		userShipping.setUserShippingDefault(true);
 		user.getUserShippingList().add(userShipping);
-		System.out.println("**************************************************************"+user.getUserShippingList().add(userShipping));
+		System.out.println("**************************************************************"
+				+ user.getUserShippingList().add(userShipping));
 		save(user);
 	}
+
 	@Override
 	public void setUserDefaultShipping(Long defaultShippingId, User user) {
 		// TODO Auto-generated method stub
-		List<UserShipping> userShippingList=(List<UserShipping>) userShippingRepository.findAll();
-			for (UserShipping userShipping : userShippingList) {
-				if(userShipping.getId() == defaultShippingId) {
-					userShipping.setUserShippingDefault(true);
-					userShippingRepository.save(userShipping);
-				}
-				else {
-					userShipping.setUserShippingDefault(false);
-					userShippingRepository.save(userShipping);
+		List<UserShipping> userShippingList = (List<UserShipping>) userShippingRepository.findAll();
+		for (UserShipping userShipping : userShippingList) {
+			if (userShipping.getId() == defaultShippingId) {
+				userShipping.setUserShippingDefault(true);
+				userShippingRepository.save(userShipping);
+			} else {
+				userShipping.setUserShippingDefault(false);
+				userShippingRepository.save(userShipping);
 
-
-					
-				}
 			}
+		}
 	}
 
 	@Override

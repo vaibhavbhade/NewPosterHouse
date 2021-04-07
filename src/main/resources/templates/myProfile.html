@@ -51,13 +51,13 @@
 									style="background-color: #ededed; margin-top: 20px;">
 
 									<ol class="breadcrumb">
-										<li class="breadcrumb-item active"><a
+										<li class="breadcrumb-item active"><a class="genric-btn primary"
 											th:href="@{/listOfShippingAddresses}"
-											th:style="${listOfShippingAddresses}? 'color:red'">List
+											>List
 												of Shipping Addresses</a></li>
-										<li class="breadcrumb-item active"><a
+										<li class="breadcrumb-item active"><a class="genric-btn primary"
 											th:href="@{/addNewShippingAddress}"
-											th:style="${addNewShippingAddress}? 'color:red'">Add(Update)
+											style="size: 10px;">Add(Update)
 												Shipping Address</a></li>
 									</ol>
 
@@ -161,7 +161,7 @@
 											</div>
 
 											<hr />
-											<button type="submit" class="btn btn-primary btn-lg">Save
+											<button type="submit" id="updateUserInfoButton" class="genric-btn primary btn-lg">Save
 												All</button>
 										</form>
 									</div>

@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +39,11 @@ import com.swiftdroid.posterhouse.model.ShippingAddress;
 import com.swiftdroid.posterhouse.model.ShoppingCart;
 import com.swiftdroid.posterhouse.model.User;
 import com.swiftdroid.posterhouse.model.UserBilling;
+import com.swiftdroid.posterhouse.model.UserPayment;
 import com.swiftdroid.posterhouse.model.UserShipping;
+import com.swiftdroid.posterhouse.model.delihivary.Packages;
+import com.swiftdroid.posterhouse.model.delihivary.Response;
+import com.swiftdroid.posterhouse.repo.UserPaymentRepository;
 import com.swiftdroid.posterhouse.service.BillingAddressService;
 import com.swiftdroid.posterhouse.service.CartItemService;
 import com.swiftdroid.posterhouse.service.OrderService;
@@ -46,6 +51,7 @@ import com.swiftdroid.posterhouse.service.ShippingAddressService;
 import com.swiftdroid.posterhouse.service.ShoppingCartService;
 import com.swiftdroid.posterhouse.service.UserService;
 import com.swiftdroid.posterhouse.service.UserShippingService;
+import com.swiftdroid.posterhouse.serviceimpl.DelhivaryService;
 import com.swiftdroid.posterhouse.utility.INDConstants;
 import com.swiftdroid.posterhouse.utility.MailConstructor;
 
@@ -56,12 +62,16 @@ public class CheckOutController {
 	private Environment env;
 
 	@Autowired
+	private UserPaymentRepository userPaymentRepository;
+
+	@Autowired
 	private PaytmDetails paytmDetails;
 
 	private ShippingAddress shippingAddress = new ShippingAddress();
 	private BillingAddress billingAddress = new BillingAddress();
 	private Order Grandorder = new Order();
 
+	private boolean delihvaryStatus = false;
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -89,10 +99,15 @@ public class CheckOutController {
 	@Autowired
 	private UserShippingService userShippingService;
 
+	@Autowired
+	private PostalCodeController postalCodeController;
+
 	@SuppressWarnings("finally")
 	@RequestMapping("/checkout")
 	public String checkoutPage(@RequestParam("id") Long cartId,
-			@RequestParam(value = "missingRequiredField", required = false) boolean missingRequiredField, Model model,
+			@RequestParam(value = "missingRequiredField", required = false) boolean missingRequiredField,
+			@RequestParam(value = "paymentFail", required = false) boolean paymentFail,
+			@RequestParam(value = "postalCode", required = false) boolean postalCode, Model model,
 
 			Principal principal, Authentication authentication) {
 
@@ -117,13 +132,14 @@ public class CheckOutController {
 				if (cartId.longValue() != user.getShoppingCart().getId().longValue()) {
 					return "badRequestPage";
 				}
-				
-				if(Grandorder.getId() != null) {
-					System.out.println("delete by id   ::::  "+Grandorder.getId());
+				System.out.println("**********  ******   " + Grandorder.getId() + " == " + Grandorder.getUserPayment()==null);
+
+
+				if (Grandorder.getId() != null && Grandorder.getUserPayment()==null) {
+					System.out.println("delete by id   ::::  " + Grandorder.getId());
 					orderService.deleteOrderById(Grandorder);
 				}
-				
-				System.out.println("######################################## :::::  "+Grandorder.getId());
+
 				List<CartItem> cartItemList = cartItemService.findByShoppingCart(user.getShoppingCart());
 
 				if (cartItemList.size() == 0) {
@@ -172,13 +188,6 @@ public class CheckOutController {
 					}
 
 				}
-				/*
-				 * for (UserPayment userPayment : userPaymentList) {
-				 * if(userPayment.isDefaultPayment()) {
-				 * paymentService.setByUserPayment(userPayment, payment);
-				 * billingAddressService.setByUserBilling(userPayment.getUserBilling(),
-				 * billingAddress); } }
-				 */
 
 				model.addAttribute("shippingAddress", shippingAddress);
 				model.addAttribute("billingAddress", billingAddress);
@@ -197,10 +206,17 @@ public class CheckOutController {
 					model.addAttribute("missingRequiredField", true);
 				}
 
+				if (paymentFail) {
+					model.addAttribute("newpaymentFail", true);
+				}
+				if (postalCode) {
+					model.addAttribute("postcodeError", true);
+				}
+
 				return "checkout";
 			}
 		} catch (Exception e) {
-			System.out.println("Exception IS CheckOutController   Method:: checkoutPage  ::  ");
+			System.out.println("Exception IS CheckOutController   Method:: checkoutPage  ::  "+e.getMessage());
 
 			return "badRequestPage";
 		}
@@ -244,8 +260,7 @@ public class CheckOutController {
 
 				if (shippingAddress.getShippingAddressStreet1().isEmpty()
 						|| shippingAddress.getShippingAddressCity().isEmpty()
-						|| shippingAddress.getShippingAddressState().isEmpty()
-						|| shippingAddress.getShippingAddressName().isEmpty()
+						|| shippingAddress.getShippingAddressState().isEmpty() || shippingAddress.getPhone().isEmpty()
 						|| shippingAddress.getShippingAddressZipcode().isEmpty()
 						|| billingAddress.getBillingAddressStreet1().isEmpty()
 						|| billingAddress.getBillingAddressCity().isEmpty()
@@ -257,8 +272,27 @@ public class CheckOutController {
 					return modelAndView;
 				}
 
+				for (CartItem cartItem : cartItemList) {
+
+					if (cartItem.getProduct().isAdminStatus() == true) {
+						boolean postal = postalCodeController.postal(shippingAddress.getShippingAddressZipcode());
+						if (postal) {
+							System.out.println("we are working with this");
+							delihvaryStatus = true;
+							break;
+						} else {
+							delihvaryStatus = false;
+							modelAndView
+									.setViewName("redirect:/checkout?id=" + shoppingCart.getId() + "&postalCode=true");
+							return modelAndView;
+						}
+					}
+
+				}
+
 				Order order = orderService.createOrder(shoppingCart, shippingAddress, billingAddress, shippingMethod,
 						user);
+				
 				Grandorder = order;
 
 				String OrderId = "POSTERHOUSE" + order.getId();
@@ -268,7 +302,7 @@ public class CheckOutController {
 				parameters.put("MOBILE_NO", env.getProperty("paytm.mobile"));
 				parameters.put("EMAIL", env.getProperty("paytm.email"));
 				parameters.put("ORDER_ID", OrderId);// order.getFinalPrice().toString()
-				parameters.put("TXN_AMOUNT",  "1");
+				parameters.put("TXN_AMOUNT", "1");
 				parameters.put("CUST_ID", order.getUser().getId().toString());
 				String checkSum = getCheckSum(parameters);
 				parameters.put("CHECKSUMHASH", checkSum);
@@ -333,7 +367,7 @@ public class CheckOutController {
 					model.addAttribute("stateList", stateList);
 
 					List<UserShipping> userShippingList = user.getUserShippingList();
-					// List<UserPayment> userPaymentList = user.getUserPaymentList();
+					/// List<UserPayment> userPaymentList = user.getUserPaymentList();
 
 					model.addAttribute("userShippingList", userShippingList);
 					// model.addAttribute("userPaymentList", userPaymentList);
@@ -364,21 +398,21 @@ public class CheckOutController {
 		List<CartItem> CartItemList = order.getCartItemList();
 
 		for (CartItem cartItem : CartItemList) {
-
 			Product product = cartItem.getProduct();
-			String fileName = user.getId() + "_" + product.getId() + ".png";
-			Path sourceFilePath = Paths.get("src/main/resources/static/img/user/userproductImage/" + fileName);
-			String newfileName = user.getId() + "_" + product.getId() + "_" + order.getId() + "_"
-					+ order.getOrderDate().getDate() + "-" + order.getOrderDate().getDay() + "_"
-					+ order.getOrderDate().getYear() + ".png";
-			Path targetFilePath = Paths.get("src/main/resources/static/img/user/userproductImage/" + newfileName);
+			for (int i = 1; i <= cartItem.getQty(); i++) {
 
-			try {
+				String fileName = user.getShoppingCart().getId() + "_" + product.getId() +"_"+i +"_.png";
+				Path sourceFilePath = Paths.get("src/main/resources/static/img/user/userproductImage/" + fileName);
+				String newfileName = user.getId() + "_" + product.getId() + "_" + order.getId() + "_"+i+"_"+new SimpleDateFormat("yyyyMMddHHmmssSSS'.png'").format(order.getOrderDate());
+				Path targetFilePath = Paths.get("src/main/resources/static/img/user/userproductImage/" + newfileName);
 
-				Files.move(sourceFilePath, targetFilePath);
+				try {
 
-			} catch (Exception e) {
-				// TODO: handle exception
+					Files.move(sourceFilePath, targetFilePath);
+
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		}
 
@@ -407,10 +441,6 @@ public class CheckOutController {
 				if (parameters.get("RESPCODE").equals("01")) {
 					result = "Payment Successful";
 
-					mailSender.send(mailConstructor.constructOrderConfirmationEmail(user, Grandorder, Locale.ENGLISH));
-
-					moveFile(Grandorder, user);
-
 					shoppingCartService.clearShoppingCart(user.getShoppingCart());
 
 					LocalDate today = LocalDate.now();
@@ -421,13 +451,48 @@ public class CheckOutController {
 						estimatedDeliveryDate = today.plusDays(5);
 					}
 
+					System.out.println(parameters.toString());
+					// Step 1:-
+					UserPayment userPayment =userPaymentRepository.save( DelhivaryService.savePaymentDetails(parameters, Grandorder, user));
+
+					
+					// Step 2 genrate Waybill:-
+					if (delihvaryStatus) {
+						System.out.println("genrate WayBill ");
+						// Step 3:-
+						String Waybill = DelhivaryService.getWayBill();
+
+						// Step 4:-
+						Response response = DelhivaryService.createorderDelivery(Waybill, Grandorder);
+						if (response.isSuccess() && response.getPackages() != null
+								&& response.getPackages().length > 0) {
+							Packages packages = response.getPackages()[0];
+							if (packages.getStatus().equalsIgnoreCase("Success")) {
+								Grandorder.setTackingId(Long.parseLong(packages.getWaybill()));
+								Grandorder.setDelhiveryStatus(true);
+								System.out.println("order Creyted on Delhivary WayBill ");
+							}
+						}
+
+					}
+					Grandorder.setUserPayment(userPayment);
+					Grandorder = orderService.saveOrderWithUpdate(Grandorder);
 					model.addAttribute("ShippingAddress", Grandorder.getShippingAddress());
 					model.addAttribute("BillingAddress", Grandorder.getBillingAddress());
 					model.addAttribute("order", Grandorder);
+					if (Grandorder.getUserPayment() != null) {
+						model.addAttribute("paymentsFail", false);
+						mailSender.send(
+								mailConstructor.constructOrderConfirmationEmail(user, Grandorder, Locale.ENGLISH));
 
+						moveFile(Grandorder, user);
+					} else {
+						model.addAttribute("paymentsFail", true);
+					}
 					model.addAttribute("estimatedDeliveryDate", estimatedDeliveryDate);
 					parameters.remove("CHECKSUMHASH");
 					model.addAttribute("parameters", parameters);
+					model.addAttribute("cartItemList", Grandorder.getCartItemList());
 					return "orderConfirmationPage";
 
 				} else {
@@ -436,19 +501,21 @@ public class CheckOutController {
 					parameters.remove("CHECKSUMHASH");
 					model.addAttribute("parameters", parameters);
 					orderService.deleteOrderById(Grandorder);
-					Grandorder=null;
-System.out.println("###################################################################");
-					return "redirect:/checkout?id=" + user.getShoppingCart().getId() + "&missingRequiredField=true";
+					Grandorder = new Order();
+					System.out.println("###################################################################");
+					return "redirect:/checkout?id=" + user.getShoppingCart().getId()
+							+ "&missingRequiredField=true&paymentFail=true";
 				}
 			} else {
 				result = "Checksum mismatched";
 				parameters.remove("CHECKSUMHASH");
 				model.addAttribute("parameters", parameters);
 				orderService.deleteOrderById(Grandorder);
-				Grandorder=null;
+				Grandorder = new Order();
 				System.out.println("################################################################### kkkkkkkkk");
 
-				return "redirect:/checkout?id=" + user.getShoppingCart().getId() + "&missingRequiredField=true";
+				return "redirect:/checkout?id=" + user.getShoppingCart().getId()
+						+ "&missingRequiredField=true&paymentFail=true";
 
 			}
 		} catch (Exception e) {

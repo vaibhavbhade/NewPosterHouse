@@ -128,16 +128,58 @@ function checkZipCode(){
 
 	var zipcodeVal = $("#shippingZipcode").val();
 	
+				alert(zipcodeVal);
+	
+
+
+
+       
+	
+
 	  var regx = /[1-9][0-9]{5}/;
 	  if(regx.test(zipcodeVal) && zipcodeVal.length==6){
-		$("#shippingZipcodeMsg").html("");
-		//$("#updateUserInfoButton").prop('disabled', false);
+	  
+ 	fetch('http://localhost:8989/POSTERHOUSE/checkPostal')
+            		.then( (apidata) => {
+            			return apidata.json();
+            		})
+            		.then( (actualdata) =>{
+
+
+            			// $(logicaldiv).empty();
+            		
+
+            			alert("yes"+JSON.stringify(actualdata));
+        	            console.log("yes");
+
+            			console.log(JSON.stringify(actualdata));
+            			alert("postal_code::"+	actualdata.delivery_codes);
+            			var data =	actualdata.delivery_codes
+            			alert(JSON.stringify("data:: "+data[0].postal_code));
+            			var postalcode=data[0].postal_code;
+            			alert(postalcode.cod);
+            			if(postalcode.cod=='Y'){
+            			alert("if");
+            			$("#shippingZipcodeMsg").html("");
+		$("#updateUserInfoButton").prop('disabled', false);
+            			}
+            			else{
+            			alert("else");
+            			$("#shippingZipcodeMsg").html(" ** We are not working with this zipcode");
+			$("#updateUserInfoButton").prop('disabled', true);
+            			}
+            			
+            		}).catch((error) =>{
+            			console.log("the errer  ${error}");
+            		})
+
 	  }
 	  else{
 			$("#shippingZipcodeMsg").html(" ** Please Enter Valid Zipcode");
-			//$("#updateUserInfoButton").prop('disabled', true);
+			$("#updateUserInfoButton").prop('disabled', true);
 	  }
 }
+
 $(document).ready(function(){
 	$(".cartItemQty").on('change', function(){
 		var id=this.id;
@@ -151,8 +193,9 @@ $(document).ready(function(){
 	$("#username").keyup(checkUsernameLength);
 	$("#phoneNumber").keyup(checkPhoneNumber);
 	$("#editphoneNumber").keyup(checkEditPhoneNumber);
-	$("#shippingZipcode").keyup(checkZipCode);
-	$("#txtNewPassword").keyup(checkPasswordLengthInProfile);
+/*	$("#shippingZipcode").keyup(checkZipCode);
+*/	
+$("#txtNewPassword").keyup(checkPasswordLengthInProfile);
 	
 });
 
