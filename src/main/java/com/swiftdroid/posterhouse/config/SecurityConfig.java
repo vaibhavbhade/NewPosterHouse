@@ -47,7 +47,7 @@ return encoder;
 		 "/img/**",
 		 "/downloadImage",
 		 "/shoppingCart","/img/i1.jpg",
-"/fetchProductBysizeandproductId",
+         "/fetchProductBysizeandproductId",
 		 "/","/productDetail",
 		 "/registration","/pgresponse",
 		 "/fetchProduct","/fetchProductCategoryWise",

@@ -21,7 +21,7 @@ public interface CartItemService {
 	
 	public void removeCartItem(CartItem cartItem);
 
-	void saveCart(CartItem cartItem);
+	CartItem saveCart(CartItem cartItem);
 
 	List<CartItem> findByOrder(Order order);
 

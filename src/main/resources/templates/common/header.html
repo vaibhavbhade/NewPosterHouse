@@ -305,12 +305,29 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	            id: 'btnDelete' + productID,
 	            name: 'btnDelete' + productID
 	        });
+	        alert(productID);
+	        nextProduct.find('img').eq(0).attr({
+	            id: 'thumbnail' + productID,
+	            name: 'thumbnail' + productID
+	        });
 	        nextProduct.find('a').eq(1).attr({
 	            id: 'btnAddMore' + productID,
-	            name: 'btnAddMore' + productID
+	            name: 'btnAddMore' + productID,
 	        });
-	
+	        
 	        $('.div_row').append(nextProduct);
+
+	        var newId='btnUpload' + productID;
+	       
+//reset input by id;
+
+$("#"+newId).val("");
+
+/* var imgId='thumbnail' + productID;
+var url = $("#"+imgId).attr("src");
+alert(url);
+alert(imgId);
+$("#"+imgId).removeAttr("src").attr("src", ""); */
 
 
 		    var x = document.getElementById("btnUpload"+productID);
@@ -330,7 +347,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			z.style.display = "block";
 		}
 		function deleteImage(){
-			
+			location.reload();
 		}
 		
 		/* function showImageThumbnailFirst(fileInput){

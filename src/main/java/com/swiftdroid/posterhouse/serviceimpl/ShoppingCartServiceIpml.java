@@ -20,7 +20,6 @@ public class ShoppingCartServiceIpml implements ShoppingCartService {
 	
 	@Autowired
 	private CartItemService cartItemService;
-	
 	@Override
 	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart) {
 		// TODO Auto-generated method stub
@@ -31,11 +30,19 @@ public class ShoppingCartServiceIpml implements ShoppingCartService {
 		List<CartItem> cartItemList=cartItemService.findByShoppingCart(shoppingCart);		
 		System.out.println(cartItemList.size());
 		
+		if(cartItemList.size()!=0) {
+		
 		for (CartItem cartItem : cartItemList) {
+			if(cartItem.getQty() > 0) {
 			if(cartItem.getProduct().getMaximumQuantity() >0) {
 				cartItemService.updateCartItem(cartItem);
 				cartTotal=cartTotal.add(cartItem.getSubtotal());
 				
+			}
+		}
+			else {
+				cartItemService.removeCartItem(cartItem);
+				}
 			}
 		}
 		System.out.println("fffffffffffffffffffffffffffffdffffffffffffffffffffffff"+cartTotal);
@@ -46,6 +53,7 @@ public class ShoppingCartServiceIpml implements ShoppingCartService {
 		
 		return shoppingCart;
 	}
+
 
 	@Override
 	public void clearShoppingCart(ShoppingCart shoppingCart) {

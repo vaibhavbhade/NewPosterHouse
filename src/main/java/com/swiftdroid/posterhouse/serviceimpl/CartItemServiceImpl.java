@@ -49,8 +49,8 @@ public class CartItemServiceImpl  implements CartItemService
 		  List<CartItem> cartItemList = findByShoppingCart(user.getShoppingCart());
 			
 			for (CartItem cartItem : cartItemList) {
-				if(productConfig.getId() == cartItem.getProductConfig().getId()) {
-					cartItem.setQty(qty);
+				if(productConfig.getId().longValue() == cartItem.getProductConfig().getId().longValue()) {
+					cartItem.setQty(cartItem.getQty()+qty);
 					cartItem.setSubtotal(new BigDecimal(productConfig.getPricePerQty()).multiply(new BigDecimal(qty)));
 					cartItemRepository.save(cartItem);
 					return cartItem;
@@ -106,9 +106,8 @@ public class CartItemServiceImpl  implements CartItemService
 	}
 
 	@Override
-	public void saveCart(CartItem cartItem) {
-		// TODO Auto-generated method stub
-		cartItemRepository.save(cartItem);
+	public CartItem saveCart(CartItem cartItem) {
+		return cartItemRepository.save(cartItem);
 	}
 
 	@Override

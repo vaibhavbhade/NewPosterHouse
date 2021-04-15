@@ -29,15 +29,15 @@
         </div>
     </section>
     <!-- End Banner Area -->
-<div th:if="${notEnoughStock}" class="alert alert-warning">
+<div th:if="${notEnoughStock}" class="alert alert-warning"><p style="text-align: center;">
 						Oops, some of the products don't have enough stock. Please update
-						product quantity.</div>
+						product quantity.</p></div>
 					<div th:if="${emptyCart}" class="alert alert-warning">Oops,
 						your cart is empty. See if you can find what you like in the
 						Product and add them to cart.</div>
-<div th:if="${qtyMsg}" class="alert alert-warning">Select quantity more then 0.</div>
+<div style="text-align: center;" th:if="${qtyMsg}" class="alert alert-warning">Select quantity more then 0.</div>
 
-<div th:if="${idError}" class="alert alert-warning">Bad Request.</div>
+<div style="text-align: center;" th:if="${idError}" class="alert alert-warning">Bad Request.</div>
 
 
     <!--================Cart Area =================-->
@@ -69,16 +69,17 @@
                                 <td>               
                                     <div class="media">
                                         <div class="d-flex">
-                                            <a href="single-product.html"><img src="img/category/ct2.jpg" alt="" style="max-width:150px;"></a>
+                                            <a href="single-product.html"><img th:src="@{#{adminPath}+'/admin/'+${cartItem.product.productImage.mainImageUrl}}" alt="" style="max-width:150px;"></a>
                                         </div>
                                         <div class="media-body">
                                             <a href="single-product.html"><p th:text="${cartItem.product.productName}"></p></a>
                                             <br>
-                                            
-                                             <a class="genric-btn danger circle" th:href="@{/removeItem?id=}+${cartItem.id}">remove</a>
-                                            
-                                        </div>
-                                        
+                                            <th:block  th:each="image: ${cartItem.CartItemToImage}">
+                                            <a th:href="@{/removeItem(id=${cartItem.id},count=${image.id})}" th:text="${image.id}"><!-- <img th:src="@{'/src/main/resources/static/img/user/userproductImage/'+${shoppingCart.id}+'_'+${cartItem.product.id}+'_'+${i}+'_.png'}" alt="" > --></a>
+	
+                                            </th:block>
+<!--                                              <a class="genric-btn danger circle" th:href="@{/removeItem?id=}+${cartItem.id}">remove</a>
+ -->                                        </div>
                                     </div>
                                     
                                 </td>

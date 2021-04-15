@@ -198,6 +198,7 @@ $(document).ready(function(){
 $("#txtNewPassword").keyup(checkPasswordLengthInProfile);
 	
 });
+var i=1;
 
 var  _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
 function ValidateSingleInput(oInput) {
@@ -221,5 +222,21 @@ function ValidateSingleInput(oInput) {
             }
         }
     }
+    
+     showImageThumbnailThird(oInput);
     return true;
+}
+
+function showImageThumbnailThird(fileInput){
+	alert("ready"+i);
+
+	file =fileInput.files[0];
+	reader=new FileReader();
+    var id='thumbnail'+i;
+alert(id);
+	reader.onload=function(e){
+		$('#'+id).attr('src',e.target.result);
+	}	
+	i++;
+	reader.readAsDataURL(file)
 }

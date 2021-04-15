@@ -28,10 +28,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nimbusds.openid.connect.sdk.UserInfoRequest;
 import com.paytm.pg.merchant.PaytmChecksum;
 import com.swiftdroid.posterhouse.config.CustomOAuth2User;
 import com.swiftdroid.posterhouse.model.BillingAddress;
 import com.swiftdroid.posterhouse.model.CartItem;
+import com.swiftdroid.posterhouse.model.CartItemToImage;
 import com.swiftdroid.posterhouse.model.Order;
 import com.swiftdroid.posterhouse.model.PaytmDetails;
 import com.swiftdroid.posterhouse.model.Product;
@@ -51,6 +53,7 @@ import com.swiftdroid.posterhouse.service.ShippingAddressService;
 import com.swiftdroid.posterhouse.service.ShoppingCartService;
 import com.swiftdroid.posterhouse.service.UserService;
 import com.swiftdroid.posterhouse.service.UserShippingService;
+import com.swiftdroid.posterhouse.serviceimpl.CartToImageService;
 import com.swiftdroid.posterhouse.serviceimpl.DelhivaryService;
 import com.swiftdroid.posterhouse.utility.INDConstants;
 import com.swiftdroid.posterhouse.utility.MailConstructor;
@@ -93,6 +96,11 @@ public class CheckOutController {
 	@Autowired
 	private UserService userService;
 
+	
+	@Autowired
+	private CartToImageService  CartToImageService;
+	
+	
 	@Autowired
 	private CartItemService cartItemService;
 
@@ -132,10 +140,10 @@ public class CheckOutController {
 				if (cartId.longValue() != user.getShoppingCart().getId().longValue()) {
 					return "badRequestPage";
 				}
-				System.out.println("**********  ******   " + Grandorder.getId() + " == " + Grandorder.getUserPayment()==null);
+				System.out.println(
+						"**********  ******   " + Grandorder.getId() + " == " + Grandorder.getUserPayment() == null);
 
-
-				if (Grandorder.getId() != null && Grandorder.getUserPayment()==null) {
+				if (Grandorder.getId() != null && Grandorder.getUserPayment() == null) {
 					System.out.println("delete by id   ::::  " + Grandorder.getId());
 					orderService.deleteOrderById(Grandorder);
 				}
@@ -216,7 +224,7 @@ public class CheckOutController {
 				return "checkout";
 			}
 		} catch (Exception e) {
-			System.out.println("Exception IS CheckOutController   Method:: checkoutPage  ::  "+e.getMessage());
+			System.out.println("Exception IS CheckOutController   Method:: checkoutPage  ::  " + e.getMessage());
 
 			return "badRequestPage";
 		}
@@ -292,7 +300,7 @@ public class CheckOutController {
 
 				Order order = orderService.createOrder(shoppingCart, shippingAddress, billingAddress, shippingMethod,
 						user);
-				
+
 				Grandorder = order;
 
 				String OrderId = "POSTERHOUSE" + order.getId();
@@ -396,31 +404,36 @@ public class CheckOutController {
 	public void moveFile(Order order, User user) {
 
 		List<CartItem> CartItemList = order.getCartItemList();
-		String format="";
+		String format = "";
 		for (CartItem cartItem : CartItemList) {
 			Product product = cartItem.getProduct();
-			for (int i = 1; i <= cartItem.getQty(); i++) {
+			List<CartItemToImage> cartItemToImageList = cartItem.getCartItemToImage();
+for (CartItemToImage  cartItemToImage : cartItemToImageList) {
+	
 
-				String fileName = user.getShoppingCart().getId() + "_" + product.getId() +"_"+i +"_.png";
+		
+				String fileName = user.getShoppingCart().getId() + "_" + product.getId() + "_" + cartItem.getId() +"_"+cartItemToImage.getId()+ "_.png";
 				Path sourceFilePath = Paths.get("src/main/resources/static/img/user/userproductImage/" + fileName);
-				 format=new SimpleDateFormat("yyyyMMddHHmmssSSS").format(order.getOrderDate());
-				String newfileName = user.getId() + "_" + product.getId() + "_" + order.getId() + "_"+i+"_"+new SimpleDateFormat("yyyyMMddHHmmssSSS'.png'").format(order.getOrderDate());
+				format = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(order.getOrderDate());
+				String newfileName = user.getId() + "_" + product.getId() + "_" + order.getId() + "_" + cartItem.getId() + "_"+cartItemToImage.getId()+"_"
+						+ new SimpleDateFormat("yyyyMMddHHmmssSSS'.png'").format(order.getOrderDate());
 				Path targetFilePath = Paths.get("src/main/resources/static/img/user/userproductImage/" + newfileName);
-
+				
 				try {
 
 					Files.move(sourceFilePath, targetFilePath);
-
+					cartItemToImage.setImgPath(newfileName);
+					CartToImageService.saveImage(cartItemToImage);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
 			}
 		}
-		order.setDownloadpath(format);
-		orderService.saveOrderWithUpdate(order);
-
 	}
+		
+	
 
+	
 	@PostMapping(value = "/pgresponse")
 	public String getResponseRedirect(HttpServletRequest request, Model model) {
 
@@ -456,9 +469,9 @@ public class CheckOutController {
 
 					System.out.println(parameters.toString());
 					// Step 1:-
-					UserPayment userPayment =userPaymentRepository.save( DelhivaryService.savePaymentDetails(parameters, Grandorder, user));
+					UserPayment userPayment = userPaymentRepository
+							.save(DelhivaryService.savePaymentDetails(parameters, Grandorder, user));
 
-					
 					// Step 2 genrate Waybill:-
 					if (delihvaryStatus) {
 						System.out.println("genrate WayBill ");
