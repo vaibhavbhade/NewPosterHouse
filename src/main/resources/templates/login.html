@@ -39,8 +39,8 @@
 						<img class="img-fluid" src="img/login.jpg" alt="">
 						<div class="hover">
 							<h4>New to our website?</h4>
-							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-							<a class="primary-btn" th:href="@{/registration}">Create an Account</a>
+<!-- 							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+ -->							<a class="primary-btn" th:href="@{/registration}">Create an Account</a>
 						</div>
 					</div>
 				</div>
@@ -111,8 +111,8 @@
 									
 									&nbsp;
 		<form th:action="@{/forgetPassword}" method="post">
-			<input type="text" id="recoverEmail" name="email" value="Your e-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your e-mail address';}" required="required">
-			<input type="submit" value="Reset my Password">
+			<input type="text" id="recoverEmail" name="email" value="Your e-mail address" required="required">
+			<button type="submit" >Reset my Password</button>
 		</form>
 	</div>
 </div>

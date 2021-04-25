@@ -85,4 +85,23 @@ public class MailConstructor {
 		
 		return messagePreparator;
 	}
+	
+	public MimeMessagePreparator constructWelcomeMail (String firstName, String emailAddress,Locale locale) {
+		Context context = new Context();
+		context.setVariable("firstName", firstName);
+		String text = templateEngine.process("welcomeMail", context);
+		
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper email = new MimeMessageHelper(mimeMessage);
+				email.setTo(emailAddress);
+				email.setSubject("Welcome From Posterhouse");
+				email.setText(text, true);
+				email.setFrom(new InternetAddress("ray.deng83@gmail.com"));
+			}
+		};
+		System.out.println(messagePreparator.toString());
+		return messagePreparator;
+	}
 }

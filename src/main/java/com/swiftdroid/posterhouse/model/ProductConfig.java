@@ -73,14 +73,11 @@ public class ProductConfig  {
 	@Column(name = "ppq")
 	private double pricePerQty;
 	
-	@Column(name = "ppf")
-	private int pricePerFace;
+	
 	
 	@Column(name = "DR")
 	private String durationToMake;
 	
-	@Column(name = "AV")
-	private int availibility;
 
 	@Column(name = "IA")
 	private boolean status;
@@ -200,13 +197,7 @@ public class ProductConfig  {
 		this.pricePerQty = pricePerQty;
 	}
 
-	public int getPricePerFace() {
-		return pricePerFace;
-	}
-
-	public void setPricePerFace(int pricePerFace) {
-		this.pricePerFace = pricePerFace;
-	}
+	
 
 	public String getDurationToMake() {
 		return durationToMake;
@@ -216,13 +207,7 @@ public class ProductConfig  {
 		this.durationToMake = durationToMake;
 	}
 
-	public int getAvailibility() {
-		return availibility;
-	}
-
-	public void setAvailibility(int availibility) {
-		this.availibility = availibility;
-	}
+	
 
 	
 
@@ -285,8 +270,8 @@ public class ProductConfig  {
 				+ ", productConfigName=" + productConfigName + ", productConfigDiscription=" + productConfigDiscription
 				+ ", size=" + size + ", WIDTH=" + WIDTH + ", HEIGHT=" + HEIGHT + ", DEPTH=" + DEPTH
 				+ ", weightOfProduct=" + weightOfProduct + ", totalWeight=" + totalWeight + ", pricePerQty="
-				+ pricePerQty + ", pricePerFace=" + pricePerFace + ", durationToMake=" + durationToMake
-				+ ", availibility=" + availibility + ", isActive=" + status + ", cretedDate=" + cretedDate
+				+ pricePerQty + ", durationToMake=" + durationToMake
+				+ ",  isActive=" + status + ", cretedDate=" + cretedDate
 				+ ", cretedBy=" + cretedBy + ", modifiedDate=" + modifiedDate + ", modifiedBy=" + modifiedBy + "]";
 	}
 	

@@ -9,6 +9,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,8 @@ public class ShoppingCartController {
 
 	@Autowired
 	private CartItemService cartItemService;
+	@Autowired
+	private Environment env;
 
 	/*
 	 * @Autowired private BookService bookService;
@@ -76,6 +79,7 @@ public class ShoppingCartController {
 			ShoppingCart shoppingCart = user.getShoppingCart();
 
 			shoppingCartService.updateShoppingCart(shoppingCart);
+			System.out.println("here");
 
 			List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
 
@@ -89,7 +93,7 @@ public class ShoppingCartController {
 
 	@SuppressWarnings("finally")
 	@RequestMapping("/addItem")
-	public String addItem(@ModelAttribute("qty") String qty,
+	public String addItem(
 			@ModelAttribute("productConfig") ProductConfig productConfig, Model model, Principal principal,
 			Authentication authentication, @RequestParam("file") MultipartFile[] imageMultipart)
 			throws MultipartException {
@@ -108,6 +112,10 @@ public class ShoppingCartController {
 			user = userService.findByUsername(principal.getName());
 		} finally {
 
+			
+			String path=env.getProperty("imgPath");
+			
+			System.out.println("path :: "+path);
 			System.out.println("ProductCofig ID :: " + productConfig.getId());
 
 			System.out.println(
@@ -139,7 +147,7 @@ public class ShoppingCartController {
 					for (CartItem cartItem : cartItemList) {
 						System.out.println("@@@@@@@@@@@ 2 @@@@@@@");
 
-						if (cartItem.getProduct().equals(product)) {
+						if (cartItem.getProduct().equals(product) && cartItem.getProductConfig().equals(productConfig)) {
 							System.out.println("@@@@@@@@@@@ 3 @@@@@@@");
 
 							for (MultipartFile multipartFile : imageMultipart) {
@@ -153,8 +161,9 @@ public class ShoppingCartController {
 								String name = user.getShoppingCart().getId() + "_" + product.getId() + "_"
 										+ cartItem.getId() + "_" + cartItemImage.getId() + "_.png";
 								cartItemImage.setImgPath(name);
+								//src/main/resources/static/img/user/userproductImage/
 								// String id=user.getShoppingCart().getId() + "_" + product.getId() + "_.png"
-								File file = new File("src/main/resources/static/img/user/userproductImage/" + name);
+								File file = new File(path + name);
 								FileOutputStream out = new FileOutputStream(file);
 								BufferedOutputStream strem = new BufferedOutputStream(out);
 								cartItemImageImpl.save(cartItemImage);
@@ -192,7 +201,7 @@ public class ShoppingCartController {
 										+ cartItems.getId() + "_" + cartItemImage.getId() + "_.png";
 								cartItemImage.setImgPath(name);
 								// String id=user.getShoppingCart().getId() + "_" + product.getId() + "_.png"
-								File file = new File("src/main/resources/static/img/user/userproductImage/" + name);
+								File file = new File(path + name);
 								FileOutputStream out = new FileOutputStream(file);
 								BufferedOutputStream strem = new BufferedOutputStream(out);
 								cartItemImageImpl.save(cartItemImage);
@@ -220,7 +229,7 @@ public class ShoppingCartController {
 								+ "_" + cartItemImage.getId() + "_.png";
 						cartItemImage.setImgPath(name);
 						// String id=user.getShoppingCart().getId() + "_" + product.getId() + "_.png"
-						File file = new File("src/main/resources/static/img/user/userproductImage/" + name);
+						File file = new File(path + name);
 						FileOutputStream out = new FileOutputStream(file);
 						BufferedOutputStream strem = new BufferedOutputStream(out);
 						cartItemImageImpl.save(cartItemImage);
@@ -296,7 +305,7 @@ public class ShoppingCartController {
 				if (cartItem.getQty() == 0) {
 					model.addAttribute("qtyMsg", true);
 					cartItemService.removeCartItem(cartItemService.findById(id));
-					return "forward:/cart";
+					return "redirect:/cart";
 				}
 
 				Product product = cartItem.getProduct();
@@ -307,7 +316,7 @@ public class ShoppingCartController {
 				cartToImageService.deleteCartImageByCartIdAndCartImageId(cartItem, imageId);
 				cartItem.setQty(cartItem.getQty() - 1);
 				cartItemService.saveCart(cartItem);
-				return "forward:/cart";
+				return "redirect:/cart";
 
 			}
 		} catch (Exception e) {

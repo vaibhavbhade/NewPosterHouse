@@ -4,7 +4,7 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<div class="container">
+
 
 			<div th:replace="common/header :: navbar "/>
 	
@@ -15,64 +15,72 @@
 				<div class="col-first">
 					<h1> My Orders</h1>
 					<nav class="d-flex align-items-center">
-						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="login.html">Your Account</a>
+						<a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">My Orders</a>
 					</nav>
 				</div>
 			</div>
 		</div>
 	</section>
+	
     <section class="cart_area">
+<div class="container  form-group">
+<div class="progress-table-wrap col-lg-12"  style="width:100%; background-color: white;">
+	<div class="progress-table  col-lg-12" style="padding:10px;width:100%;background-color: white;">
 
+        <table class="table table-striped table-bordered col-lg-12"  id="Ordertable" style="width:100%;"  >
+                          <thead>
+		<tr>
+			<th scope="col">Order Date</th>
+			<th scope="col">Order Number</th>
+			<th scope="col">Total</th>
+			<th scope="col">Estimate Delivery Date</th>
+			<th scope="col">Payment status</th>
+			
+			<th scope="col">Tracking Id</th>
+			
+			<th scope="col">Status</th>
+			<th  scope="col">Operation</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="order : ${orderList}">
+			<td style="text-align: center; vertical-align: middle;"><a th:href="@{/orderDetail(id=${order.id})}"><span
+					 th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy hh:mm:ss a')}"></span></a></td>
+			<td style="text-align: center; vertical-align: middle;" data-th-text="${'#PosterHouse'+order.id}"></td>
+			<td style="text-align: center; vertical-align: middle;" data-th-text="${order.finalPrice}"></td>
+			<td style="text-align: center; vertical-align: middle;" data-th-text="${order.estimateDate}"></td>
+			<td style="text-align: center; vertical-align: middle; color: green;" data-th-text="${order.userPayment.status}"></td>
+			<td style="text-align: center; vertical-align: middle;" th:if="${order.tackingId} != null" th:text=${order.tackingId} ></td>
+			<td style="text-align: center; vertical-align: middle;" th:if="${order.tackingId} == null" >-</td>
+			<td style="text-align: center; vertical-align: middle;" data-th-text="${order.orderStatus}"></td>
+			<td > <a th:href="@{/orderDetail(id=${order.id})}" class="genric-btn primary btn-sm col-lg-12 form-group" >Details</a>
+			<a  th:if="${order.tackingId} != null and ${order.delhiveryStatus}==true" th:href="@{/trackOrder(id=${order.tackingId})}" style="margin-top: 7px;" class="genric-btn success btn-sm form-group col-lg-12">Track</a></td>
+		</tr>
+														</hr>
+		
+	</tbody> 
 
-                               <table class="table" id="Ordertable" >
-                                                 <thead>
-											<tr>
-												<th scope="col">Order Date</th>
-												<th scope="col">Order Number</th>
-												<th scope="col">Total</th>
-												<th scope="col">Estimate Delivery Date</th>
-												<th scope="col">Payment status</th>
-												
-												<th scope="col">Tracking Id</th>
-												
-												<th scope="col">Status</th>
-												<th scope="col">Opreation</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="order : ${orderList}">
-												<td style="text-align: center; vertical-align: middle;"><a th:href="@{/orderDetail(id=${order.id})}"><span
-														th:text="${order.orderDate}"></span></a></td>
-												<td style="text-align: center; vertical-align: middle;" data-th-text="${'#PosterHouse'+order.id}"></td>
-												<td style="text-align: center; vertical-align: middle;" data-th-text="${order.finalPrice}"></td>
-												<td style="text-align: center; vertical-align: middle;" data-th-text="${order.estimateDate}"></td>
-												<td style="text-align: center; vertical-align: middle; color: green;" data-th-text="${order.userPayment.status}"></td>
-												<td style="text-align: center; vertical-align: middle;" th:if="${order.tackingId} != null" th:text=${order.tackingId} ></td>
-												<td style="text-align: center; vertical-align: middle;" th:if="${order.tackingId} == null" >-</td>
-												<td style="text-align: center; vertical-align: middle;" data-th-text="${order.orderStatus}"></td>
-												<td  > <a th:href="@{/orderDetail(id=${order.id})}" class="genric-btn primary btn-sm" >Order Details</a><a  th:if="${order.tackingId} != null"     th:href="@{/trackOrder(id=${order.tackingId})}"  class="genric-btn success btn-sm">Track Order</a></td>
-											</tr>
-																							</hr>
-											
-										</tbody> 
-
-                      </table>
-                      </section>
+             </table>
                       
-                    </div>  
+	</div>
+</div>
+                    </div> 
+                      </section>
+                       
                           <!-- start footer Area -->
     		
 			<div th:replace="common/header :: footer "/>
 	<div th:replace="common/header :: body-bottom-scripts " />
-<!-- 	<script>
-		$(document).ready(function() {
+<script>
+/* "lengthMenu": [ [5, 10, 25, -1], [5, 10, 25, "All"] ],
+ */		$(document).ready(function() {
 			$("#Ordertable").DataTable({
-				  "lengthMenu": [ [5, 10, 25, -1], [5, 10, 25, "All"] ],
+				"paging":   false,
                 "ordering": false,
 				stateSave: true
 			});
-		}); -->
+		});
 	</script>
-</body>
+ </body>
 </html>

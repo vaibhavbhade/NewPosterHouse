@@ -10,5 +10,4 @@ public interface CategoryRepository extends CrudRepository<ProductType, Long>
 {
 	
 	
-	
 }

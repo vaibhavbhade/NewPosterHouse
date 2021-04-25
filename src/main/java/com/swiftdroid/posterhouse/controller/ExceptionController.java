@@ -22,6 +22,7 @@ public class ExceptionController {
 	 @ExceptionHandler(Exception.class)
 	    public final String handleAllExceptions(Exception ex, WebRequest request) {
 	        List<String> details = new ArrayList<>();
+	        System.out.println(ex.getMessage());
 	        details.add(ex.getLocalizedMessage());
 	        return "badRequestPage";
 	    }

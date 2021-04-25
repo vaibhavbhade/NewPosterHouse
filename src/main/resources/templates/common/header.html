@@ -25,8 +25,8 @@
 
 		============================================= -->
 
-<!-- <link th:href="@{css/jquery.dataTables.min.css}" rel="stylesheet" />
-<link th:href="@{css/dataTables.bootstrap.min.css}" rel="stylesheet" /> -->
+<link th:href="@{css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{css/dataTables.bootstrap.min.css}" rel="stylesheet" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  
@@ -44,6 +44,11 @@
 <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css" />
 <link rel="stylesheet" href="css/magnific-popup.css">
 <link rel="stylesheet" href="css/main.css">
+
+<link rel="stylesheet" href="css/select2.css">
+<link rel="stylesheet" href="css/select2.min.css">
+
+
 
 <title>POSTERHOUSE</title>
 </head>
@@ -111,9 +116,7 @@
 								</ul>
 							</li> -->
 					
-								<li class="nav-item"><a class="nav-link"
-									th:href="@{https://staging-express.delhivery.com/api/v1/packages/json/?waybill=3434342&token=4234567654345678
-}">Track Order</a></li>
+							
 								<li class="nav-item"><a class="nav-link"
 									th:href="@{/userOrder}">My Order</a></li>
 								<li class="nav-item submenu dropdown"><a href="#"
@@ -122,9 +125,17 @@
 										More...</a>
 									<ul class="dropdown-menu">
 										<li class="nav-item"><a class="nav-link"
-											href="#about">About Us</a></li>
+											th:href="@{/about-us}">About Us</a></li>
 										<li class="nav-item"><a class="nav-link"
 											href="#about">Contact Us</a></li>
+											<li class="nav-item"><a class="nav-link"
+											th:href="@{/termsAndCondition}">Terms And Condition</a></li>
+											<li class="nav-item"><a class="nav-link"
+											th:href="@{/faqs}">FAQs</a></li>
+											<li class="nav-item"><a class="nav-link"
+											th:href="@{/disclaimer}">Disclaimer</a></li>
+																			<li class="nav-item"><a class="nav-link"
+											th:href="@{/privacyPolicy}">Privacy Policy</a></li>
 									</ul>
 								<li class="nav-item"><a sec:authorize="isAnonymous()"
 									class="nav-link" th:href="@{/login}">Login</a></li>
@@ -158,9 +169,10 @@
 					<form th:action="@{/searchProduct}" method="post" class="d-flex justify-content-between">
 				
 						<input type="text" class="form-control" name="keyword" id="search_input"
-							placeholder="Search Here">
-							<button type="submit" class="btn"></button>
-						<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+							placeholder="Search Here" required="required">
+							<!-- <button type="submit" class="btn"><span class="lnr lnr-magnifier" id="search"></span></button> -->
+						<button class="fa fa-search" type="submit" style="color:white; background:transparent; border-color: transparent;" id="search" title="Search"></button>
+						<button class="fa fa-close" style="color:white; background:transparent; border-color: transparent;" id="close_search" title="Close Search"></button>
 					</form>
 				</div>
 			</div> 
@@ -174,15 +186,18 @@
             <div class="row">
                 <div class="col-lg-3  col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        <h6>About Us</h6>
+                        <h6>Contact Us</h6>
                         <p>
-                          Started as a 3D Printing experiment on a hot summer day of 2019 in a tiny little room, Poster House is Headquartered at Akola, Maharashtra. We initiated our business with 3D printed personalized keychains and continuously expand in social expressions industry with our Personalized Gifting products, best quality wall decor products, Scale modeling and Art & Photography services. Till date we have more than 15 products and 5 specialized services, and the list is growing. By our First Anniversary we have grown 15 folds and have relocated to our new facility. We are proud to make in India and with our ethical business practices promise 100% quality in our offerings. Poster House has successfully met the gifting requirements of over 2000 customers within a year since its inception thus establishing ourselves as a reliable brand to buy personalized gifts from. 
+                        Poster House®
+                        </p>
+                          <p>
+                         96734 46777, 79726 94015
                         </p>
                     </div>
                 </div>
                 <div class="col-lg-4  col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        <h6>Newsletter</h6>
+                       <!--  <h6>Newsletter</h6>
                         <p>Stay update with our latest</p>
                         <div class="" id="mc_embed_signup">
 
@@ -202,18 +217,18 @@
                                             type="text">
                                     </div>
 
-                                    <!-- <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4">
 													<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-												</div>  -->
+												</div> 
                                 </div>
                                 <div class="info"></div>
                             </form>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-lg-3  col-md-6 col-sm-6">
                     <div class="single-footer-widget mail-chimp">
-                        <h6 class="mb-20">Instragram Feed</h6>
+                       <!--  <h6 class="mb-20">Instragram Feed</h6>
                         <ul class="instafeed d-flex flex-wrap">
                             <li><img src="img/i1.jpg" alt=""></li>
                             <li><img src="img/i2.jpg" alt=""></li>
@@ -223,17 +238,16 @@
                             <li><img src="img/i6.jpg" alt=""></li>
                             <li><img src="img/i7.jpg" alt=""></li>
                             <li><img src="img/i8.jpg" alt=""></li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6">
                     <div class="single-footer-widget">
                         <h6>Follow Us</h6>
                         <p>Let us be social</p>
-                        <div class="footer-social d-flex align-items-center">
-							<a href="#"><i class="fa fa-instagram"></i></a>
-							<a th:href="@{https://www.facebook.com}"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
+                        <div   style="text-align: center;" class="footer-social d-flex align-items-center">
+							<a style="text-align: center;" th:href="@{https://instagram.com/poster_house777?igshid=1an39ehfcmu1c}"><i class="fa fa-instagram"></i></a>
+							<a style="text-align: center;" th:href="@{https://www.facebook.com/poster.house777/}"><i class="fa fa-facebook"></i></a>
                         </div>
                     </div>
                 </div>
@@ -259,6 +273,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			crossorigin="anonymous"></script>
 
 			
+			
+			
 		<script th:src="@{js/vendor/bootstrap.min.js}"></script>
 		<script th:src="@{js/jquery.ajaxchimp.min.js}"></script>
 		<script th:src="@{js/jquery.nice-select.min.js}"></script>
@@ -269,8 +285,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		<script th:src="@{js/owl.carousel.min.js}"></script>
 				<script th:src="@{js/ajax.js}"></script>
 		
-<!-- 		<script th:src="@{js/jquery.dataTables.min.js}"></script>
-		<script th:src="@{js/dataTables.bootstrap.min.js}"></script> -->
+		<script th:src="@{js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{js/dataTables.bootstrap.min.js}"></script>
 		<!--gmaps Js-->
 		<script
 		
@@ -279,88 +295,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		<script th:src="@{js/main.js}"></script>
 		<script th:src="@{/js/scripts.js}"></script>
 		<script th:src="@{js/demo.js}"></script>
-		<script type="text/javascript">	 
-
-    	var productID = 1;
-		function addMoreImage(){		
-		    /* var el = $(".divUploadImage").get(0); */	     
-		    /* var nextProduct = $(el).after(el.cloneNode(true)); */	
-		 
+		
+		<script th:src="@{js/select2.full.js}"></script>
+				<script th:src="@{js/select2.full.min.js}"></script>
+						<script th:src="@{js/select2.js}"></script>
+								<script th:src="@{js/select2.min.js}"></script>
+						
+				
 		
 		
-		    var x = document.getElementById("btnUpload"+productID);
-			x.style.display = "none";
-			var y = document.getElementById("btnAddMore"+productID);
-			y.style.display = "none";
-			var z = document.getElementById("btnDelete"+productID);
-			z.style.display = "block";
-			
-		    var nextProduct = $(".divUploadImage" + productID).clone();
-	        nextProduct.removeClass('divUploadImage' + productID).addClass('divUploadImage' + (++productID));
-	
-	        nextProduct.find('input').eq(0).attr({
-	            id: 'btnUpload' + productID,
-	        });
-	        nextProduct.find('a').eq(0).attr({
-	            id: 'btnDelete' + productID,
-	            name: 'btnDelete' + productID
-	        });
-	        alert(productID);
-	        nextProduct.find('img').eq(0).attr({
-	            id: 'thumbnail' + productID,
-	            name: 'thumbnail' + productID
-	        });
-	        nextProduct.find('a').eq(1).attr({
-	            id: 'btnAddMore' + productID,
-	            name: 'btnAddMore' + productID,
-	        });
-	        
-	        $('.div_row').append(nextProduct);
 
-	        var newId='btnUpload' + productID;
-	       
-//reset input by id;
-
-$("#"+newId).val("");
-
-/* var imgId='thumbnail' + productID;
-var url = $("#"+imgId).attr("src");
-alert(url);
-alert(imgId);
-$("#"+imgId).removeAttr("src").attr("src", ""); */
-
-
-		    var x = document.getElementById("btnUpload"+productID);
-			x.style.display = "block";
-			var y = document.getElementById("btnAddMore"+productID);
-			y.style.display = "none";
-			var z = document.getElementById("btnDelete"+productID);
-			z.style.display = "none";
-		}
-		function uploadImage(){
-			 
-			var x = document.getElementById("btnUpload"+productID);
-			x.style.display = "none";
-			var y = document.getElementById("btnAddMore"+productID);
-			y.style.display = "block";
-			var z = document.getElementById("btnDelete"+productID);
-			z.style.display = "block";
-		}
-		function deleteImage(){
-			location.reload();
-		}
-		
-		/* function showImageThumbnailFirst(fileInput){
-			//alert("ready");
-
-
-			$(document).ready(function(){
-				$('#btnUpload1').change(function(){
-					alert("ready");
-					showImageThumbnailFirst(this);
-				});
-			} */
-	  </script>
 	</div>
 </body>
 </html>

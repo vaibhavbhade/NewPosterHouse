@@ -147,10 +147,14 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		List<UserShipping> userShippingList = (List<UserShipping>) userShippingRepository.findAll();
 		for (UserShipping userShipping : userShippingList) {
-			if (userShipping.getId() == defaultShippingId) {
+			System.out.println(userShipping.getId()+" ==  "+defaultShippingId);
+			if (userShipping.getId().longValue() == defaultShippingId.longValue()) {
+				System.out.println("if "+defaultShippingId);
 				userShipping.setUserShippingDefault(true);
 				userShippingRepository.save(userShipping);
 			} else {
+				System.out.println("else" +userShipping.isUserShippingDefault());
+
 				userShipping.setUserShippingDefault(false);
 				userShippingRepository.save(userShipping);
 

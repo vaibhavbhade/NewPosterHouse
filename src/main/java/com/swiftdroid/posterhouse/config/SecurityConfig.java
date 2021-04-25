@@ -44,7 +44,7 @@ return encoder;
  public static final String[] PUBLIC_MATCHERS= {
 		 "/css/**",
 		 "/js/**",
-		 "/img/**",
+		 "/img/**","/src/**",
 		 "/downloadImage",
 		 "/shoppingCart","/img/i1.jpg",
          "/fetchProductBysizeandproductId",
@@ -53,7 +53,7 @@ return encoder;
 		 "/fetchProduct","/fetchProductCategoryWise",
 		 "/forgetPassword","/newUser",
 		 "/login","/oauth2/**",
-		 "/fonts/**","/searchProduct","/feedback"
+		 "/fonts/**","/searchProduct","/feedback","/about-us","/disclaimer","/termsAndCondition","/faqs","/privacyPolicy"
 		
  };
 	

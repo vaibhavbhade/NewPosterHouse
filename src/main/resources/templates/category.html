@@ -151,7 +151,7 @@
  							<div class="single-product" >	
 	                            <div class="card">				
 								<a th:href="@{/productDetail?id=}+${product.id}">
-								<img class="img-fluid" th:src="@{#{adminPath}+'/admin/'+${product.productImage.mainImageUrl}}" alt="">
+								<img class="img-fluid" th:src="@{#{adminPath}+''+${product.productImage.mainImageUrl}}" alt="">
 								</a>
 								<div class="product-details">
 									<a th:href="@{/productDetail?id=}+${product.id}">

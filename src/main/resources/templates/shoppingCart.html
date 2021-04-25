@@ -69,15 +69,21 @@
                                 <td>               
                                     <div class="media">
                                         <div class="d-flex">
-                                            <a href="single-product.html"><img th:src="@{#{adminPath}+'/admin/'+${cartItem.product.productImage.mainImageUrl}}" alt="" style="max-width:150px;"></a>
+                                            <a href="single-product.html"><img th:src="@{#{adminPath}+''+${cartItem.product.productImage.mainImageUrl}}" alt="" style="max-width:150px;"></a>
                                         </div>
                                         <div class="media-body">
                                             <a href="single-product.html"><p th:text="${cartItem.product.productName}"></p></a>
                                             <br>
+                                            
+                                            <div class="row">
                                             <th:block  th:each="image: ${cartItem.CartItemToImage}">
-                                            <a th:href="@{/removeItem(id=${cartItem.id},count=${image.id})}" th:text="${image.id}"><!-- <img th:src="@{'/src/main/resources/static/img/user/userproductImage/'+${shoppingCart.id}+'_'+${cartItem.product.id}+'_'+${i}+'_.png'}" alt="" > --></a>
+	                                         
+	                                             <img  style="margin-left: 5px;" width="64px" height="64px"  th:src="@{#{imgShowPath}+''+${image.imgPath}}" alt="" >
+                                                                                       
+                                                                                       <a style="margin-left: 5px;" class="fa fa-trash" th:href="@{/removeItem(id=${cartItem.id},count=${image.id})}" ></a>
+                                           </th:block>
+                                            </div>
 	
-                                            </th:block>
 <!--                                              <a class="genric-btn danger circle" th:href="@{/removeItem?id=}+${cartItem.id}">remove</a>
  -->                                        </div>
                                     </div>
@@ -94,8 +100,8 @@
                                 <td>               
                                     <div class="product_count">
                                      <input hidden="hidden" name="id" th:value="${cartItem.id}" /> 
-								<input  min="1" max="10" type="number" th:id="${cartItem.id}" th:name="qty" th:disabled="${cartItem.product.maximumQuantity==0}" class="form-control cartItemQty" th:value="${cartItem.qty}" />
-								<button style="display: none;" th:id="'update-item-'+${cartItem.id}" type="submit" class="btn btn-warning btn-xs">Update</button>
+								<input   type="number" th:id="${cartItem.id}" th:name="qty"  class="form-control cartItemQty" th:value="${cartItem.qty}" readonly="readonly"/>
+								
 								
                                     </div>
                                 </td>

@@ -2,7 +2,7 @@
 
 <html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
 
-<head th:replace="common/header :: common-header">
+<head th:replace="common/header :: common-header" />
 
 
 <body>
@@ -46,16 +46,16 @@
 				<div class="col-lg-6">
 					<div class="s_Product_carousel">
 						<div class="single-prd-item">
-							<img class="img-fluid" th:src="@{#{adminPath}+'/admin/'+${product.productImage.mainImageUrl}}" alt="">
+							<img class="img-fluid" th:src="@{#{adminPath}+''+${product.productImage.mainImageUrl}}" alt="">
 						</div>
 						<div class="single-prd-item">
-							<img class="img-fluid" th:src="@{#{adminPath}+'/admin/'+${product.productImage.extramageUrl1}}" alt="">
+							<img class="img-fluid" th:src="@{#{adminPath}+''+${product.productImage.extramageUrl1}}" alt="">
 						</div>
 						<div class="single-prd-item">
-							<img class="img-fluid"th:src="@{#{adminPath}+'/admin/'+${product.productImage.extraImageUrl2}}" alt="">
+							<img class="img-fluid"th:src="@{#{adminPath}+''+${product.productImage.extraImageUrl2}}" alt="">
 						</div>
 						<div class="single-prd-item">
-							<img class="img-fluid" th:src="@{#{adminPath}+'/admin/'+${product.productImage.extraImageUrl2}}" alt="">
+							<img class="img-fluid" th:src="@{#{adminPath}+''+${product.productImage.extraImageUrl2}}" alt="">
 						</div>
 					</div>
 				</div>
@@ -65,10 +65,10 @@
 						<h2>Rs.<span th:text="${productConfig.pricePerQty}"></span></h2>
 						<ul class="list">
 							<li><span>Category &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span> <a class="active"  th:text="${categoryName}" href="#"> </a></li>
-							<li><a href="#"><span>Availibility</span> : 
+							<li><a href="#"><span>Availability</span> : 
     									<span class="nowrap" th:if="*{product.maximumQuantity&gt;10}" style="color: green">In Stock</span>
     									<span class="nowrap" th:if="*{product.maximumQuantity&lt;10 and product.maximumQuantity&gt;0}" style="color: green">Only <span class="nowrap" th:text=" ${product.maximumQuantity}+' In Stock' "></span></span>
-    									<span th:if="*{product.maximumQuantity==0}" style="color:darkred;">Unavailable</span></a></li>
+    									<span th:if="*{product.maximumQuantity==0}" style="color:darkred;">Out of Stock</span></a></li>
 						</ul>
 						<p th:utext="${product.productDescription}"></p>
 						<ul class="list">
@@ -82,27 +82,27 @@
 							 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
 						</div></li>
 						
- -->	<strong>Select qty<span style="color: red;"> * </span> </strong>				
+ --><!-- 	<strong>Select qty<span style="color: red;"> * </span> </strong>				
  	<li><div class="product_count">
-<!-- 							<label for="qty">Quantity :</label>
- -->							<select class="qty" name="qty" required="required">
+							<label for="qty">Quantity :</label>
+							<select class="qty" name="qty" required="required">
                                               <option value=1>Select qty</option>
 							                <option th:each="qty : ${qtyList}" th:value="${qty}" th:text="${qty}">
     										</option>
     									</select> 
 							
-							<!-- 
+							
 						/* <input type="text" name="qty" id="sst" maxlength="12" th:text="${sst}" th:value="${sst}" title="Quantity:" class="input-text qty">
 							<button th:onclick="demo()"
 							 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
 							<button th:onclick="'var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;'"
-							 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button> -->
-						</div></li>  
+							 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+						</div></li>   -->
 						
 						
-						<label><strong>Selected size : </strong></label><input type="text" class="form-control" th:value="${productConfig.size}" readonly="readonly"/><br><br>
+						<label><strong>Selected Configuration : </strong></label><input type="text" class="form-control" th:value="${productConfig.size}" readonly="readonly"/><br><br>
 						<li><div class="product_count"  >
-						<span th:each="size : ${sizeList}"><a  class="genric-btn info-border circle" th:href="@{/fetchProductBysizeandproductId(size=${size},productId=${product.id})}" th:value="${size}" th:text="${size}"><strong></strong></a>&nbsp;</span>
+						<span th:each="size : ${sizeList}"><a  class="genric-btn info-border circle form-group" th:href="@{/fetchProductBysizeandproductId(size=${size},productId=${product.id})}" th:value="${size}" th:text="${size}"><strong></strong></a>&nbsp;</span>
 							
 							
 							<!-- <select class="size_select" id="size_select" >
@@ -142,8 +142,8 @@
 									</div>
 									<div class="card_area d-flex align-items-center" style="margin-top: 10px">	
 										<input type="file"  onchange="ValidateSingleInput(this);" name="file" class="col-xs-12 col-sm-12 col-lg-12" id="btnUpload1" onclick="uploadImage();" style="text-align: center; font-size:x-small;" required="required" />
- 										<a class="primary-btn col-xs-12 col-sm-12 col-lg-12" id="btnDelete1" onclick="deleteImage();" style="color: white; display: none; text-align: center; font-size:x-small;">Delete</a>
-									</div>		
+<!--  										<a class="primary-btn col-xs-12 col-sm-12 col-lg-12" id="btnDelete1" onclick="deleteImage();" style="color: white; display: none; text-align: center; font-size:x-small;">Delete</a>
+ -->									</div>		
 									<div class="card_area d-flex align-items-center" style="margin-top: 10px">									
 										<a class="primary-btn col-xs-12 col-sm-12 col-lg-12" id="btnAddMore1" style="color: white; display: none; font-size:x-small; text-align: center;" onclick="addMoreImage();">Add More</a>									
 									</div>
@@ -151,15 +151,16 @@
 								</div>
 							</div>
 						</div>
-					
-						<div class="card_area d-flex align-items-center">
+						<div style="margin-top: 10px" class="card_area d-flex align-items-center">
 <!-- 							<a class="primary-btn" href="cart.html">Add to Cart</a>
- -->							  <button type="submit" class="primary-btn" >Add to Cart</button>
+ -->							  <a onclick="deleteImage();" id = "btn_clear" style="color:black;" class="genric-btn danger radius" >Clear all images</a>
+ 
+							  <button type="submit" style="margin-left:10px;color:black;"  class="genric-btn primary radius" >Add to Cart</button>
 							
 							
 							<!-- <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a> -->
-							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
-						</div>
+<!-- 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+ -->						</div>
 					</div>
 				</div>
 			</div>    
@@ -234,7 +235,7 @@
 										<h5 id="weight" th:text="${productConfig.weightOfProduct}+'gm'"></h5>
 									</td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<td>
 										<h5>Quality checking</h5>
 									</td>
@@ -266,15 +267,15 @@
 										<h5>60pcs</h5>
 									</td>
 								</tr>
-							</tbody>
+				 -->		
+				 	</tbody>
 						</table>
 					</div>
 				</div>
 				
 						<div class="tab-pane fade  " id="review" role="tabpanel" aria-labelledby="review-tab">
-				hhhhhh
 				<div class="row">
-						<div class="col-lg-6">
+						<div class="col-lg-6" style="display: none;">
 							<div class="row total_rate">
 								<div class="col-6">
 									<div class="box_total">
@@ -361,25 +362,25 @@
 						<div class="col-lg-6">
 							<div class="review_box">
 								<h4>Add a Review</h4>
-								<p>Your Rating:</p>
-								<ul class="list">
+<!-- 								<p>Your Rating:</p>
+ -->								<!-- <ul class="list">
 									<li><a href="#"><i class="fa fa-star"></i></a></li>
 									<li><a href="#"><i class="fa fa-star"></i></a></li>
 									<li><a href="#"><i class="fa fa-star"></i></a></li>
 									<li><a href="#"><i class="fa fa-star"></i></a></li>
 									<li><a href="#"><i class="fa fa-star"></i></a></li>
 								</ul>
-								<p>Outstanding</p>
+								<p>Outstanding</p> -->
 								<form class="row contact_form" th:action="@{/feedback}" method="post" id="contactForm" >
 									<input th:value="${product.id}"  name="id" type="hidden">
 									<div class="col-md-12">
 										<div class="form-group">
-											<input type="text" class="form-control" id="name" name="userName" placeholder="Your Full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Full name'">
+											<input type="text" class="form-control" id="name" name="userName" placeholder="Your Full name" required="required" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Full name'">
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<input type="email" class="form-control" id="email" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
+											<input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required="required" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
 										</div>
 									</div>
 									<div class="col-md-12">
@@ -389,7 +390,7 @@
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<textarea class="form-control" name="message" id="message" rows="1" placeholder="Review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
+											<textarea class="form-control" name="message" required="required" id="message" rows="1" placeholder="Review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
 										</div>
 									</div>
 									<div class="col-md-12 text-right">

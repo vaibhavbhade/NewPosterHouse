@@ -57,8 +57,6 @@ public class Product implements Serializable {
 	@Column(name = "pd",columnDefinition="text")
 	private String productDescription;
 	
-	@Column(name = "nf")
-	private int noOfFaces;
 	
 	@Column(name = "QT")
 	private int maximumQuantity;
@@ -148,13 +146,6 @@ public class Product implements Serializable {
 		this.productDescription = productDescription;
 	}
 
-	public int getNoOfFaces() {
-		return noOfFaces;
-	}
-
-	public void setNoOfFaces(int noOfFaces) {
-		this.noOfFaces = noOfFaces;
-	}
 
 	public int getMaximumQuantity() {
 		return maximumQuantity;

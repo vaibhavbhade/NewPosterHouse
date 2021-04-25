@@ -19,7 +19,7 @@
 					<h1>My Orders</h1>
 					<nav class="d-flex align-items-center">
 						<a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>        
-						<a th:href="@{/userOrder}">My Orders</a>
+					<a th:href="@{/userOrder}">My Orders</a>
 					</nav>
 				</div>
 			</div>
@@ -45,10 +45,10 @@
 						The estimated delivery date is <span
 							th:text="${estimatedDeliveryDate}"></span>
 					</h4>
-					<h4 th:if="${!paymentsFail}">
+					<label th:if="${!paymentsFail}">
 						Transaction ID<span
 							th:text="${order.userPayment.TXNID}"></span>
-					</h4>
+					</label>
 				</div>
 				
 			<div class="row order_d_inner">
@@ -56,10 +56,10 @@
 					<div class="details_item">
 						<h4>Order Info</h4>
 						<ul class="list">
-							<li><a href="#"><span>Order number</span> <span th:text="' : POSTERHOUSE'+${order.id}"></span></a></li>
-							<li><a href="#"><span>Date</span> <span th:text="' : '+${order.orderDate}"></span></a></li>
-							<li><a href="#"><span>Total</span> <span th:with="total=${order.orderTotal+50.00}" th:text="' : '+${total}"></span></a></li>
-							<li><a href="#"><span>Payment method</span> : Online Payment</a></li>
+							<li><a href="#"><label>Order number</label> <label th:text="' : POSTERHOUSE'+${order.id}"></label></a></li>
+							<li><a href="#"><label>Date</label> <label th:text="' : '+${order.orderDate}"></label></a></li>
+							<li><a href="#"><label>Total</label> <label th:with="total=${order.orderTotal}" th:text="' : '+${total}"></label></a></li>
+							<li><a href="#"><label>Payment method</label> : Online Payment</a></li>
 						</ul>
 					</div>
 				</div>
@@ -67,11 +67,10 @@
 					<div class="details_item">
 						<h4>Billing Address</h4>
 						<ul class="list">
-							<li><a href="#"><span>Street</span><span th:text="' : '+${order.billingAddress.billingAddressStreet1}+' '+${order.billingAddress.billingAddressStreet2}"></span></a></li>
-							<li><a href="#"><span>City</span> <span th:text="' : '+${order.billingAddress.billingAddressCity}"></span></a></li>
-							<li><a href="#"><span>State</span><span th:text="' : '+${order.billingAddress.billingAddressState}"></span></a></li>
-							<li><a href="#"><span>Postcode </span><span th:text="' : '+${order.billingAddress.billingAddressZipcode}"></span>
-</a></li>
+							<li><a href="#"><label>Street</label><label th:text="' : '+${order.billingAddress.billingAddressStreet1}+' '+${order.billingAddress.billingAddressStreet2}"></label></a></li>
+							<li><a href="#"><label>City</label> <label th:text="' : '+${order.billingAddress.billingAddressCity}"></label></a></li>
+							<li><a href="#"><label>State</label><label th:text="' : '+${order.billingAddress.billingAddressState}"></label></a></li>
+							<li><a href="#"><label>Postcode </label><label th:text="' : '+${order.billingAddress.billingAddressZipcode}"></label></a></li>
 						</ul>
 					</div>
 				</div>
@@ -79,10 +78,10 @@
 					<div class="details_item">
 						<h4>Shipping Address</h4>
 						<ul class="list">
-							<li><a href="#"><span>Street</span> <span th:text="' : '+${order.shippingAddress.shippingAddressStreet1}+' '+${order.shippingAddress.shippingAddressStreet2}"></span></a></li>
-							<li><a href="#"><span>City</span> <span th:text="' : '+${order.shippingAddress.shippingAddressCity}"></span></a></li>
-							<li><a href="#"><span>State</span><span th:text="' : '+${order.shippingAddress.shippingAddressState}"></span></a></li>
-							<li><a href="#"><span>Postcode </span><span th:text="' : '+${order.shippingAddress.shippingAddressZipcode}"></span></a></li>
+							<li><a href="#"><label>Street</label> <label th:text="' : '+${order.shippingAddress.shippingAddressStreet1}+' '+${order.shippingAddress.shippingAddressStreet2}"></label></a></li>
+							<li><a href="#"><label>City</label> <label th:text="' : '+${order.shippingAddress.shippingAddressCity}"></label></a></li>
+							<li><a href="#"><label>State</label><label th:text="' : '+${order.shippingAddress.shippingAddressState}"></label></a></li>
+							<li><a href="#"><label>Postcode </label><label th:text="' : '+${order.shippingAddress.shippingAddressZipcode}"></label></a></li>
 						</ul>
 					</div>
 				</div>

@@ -363,8 +363,8 @@ public class CheckOutController {
 					shippingAddressService.setByUserShipping(userShipping, shippingAddress);
 
 					List<CartItem> cartItemList = cartItemService.findByShoppingCart(user.getShoppingCart());
-
-					model.addAttribute("shippingAddress", shippingAddress);
+					List<UserShipping> userShippingList = user.getUserShippingList();    
+			        model.addAttribute("userShippingList", userShippingList);
 					// model.addAttribute("payment", payment);
 					model.addAttribute("billingAddress", billingAddress);
 					model.addAttribute("cartItemList", cartItemList);
@@ -374,20 +374,13 @@ public class CheckOutController {
 					Collections.sort(stateList);
 					model.addAttribute("stateList", stateList);
 
-					List<UserShipping> userShippingList = user.getUserShippingList();
-					/// List<UserPayment> userPaymentList = user.getUserPaymentList();
-
-					model.addAttribute("userShippingList", userShippingList);
-					// model.addAttribute("userPaymentList", userPaymentList);
-
+				
 					model.addAttribute("shippingAddress", shippingAddress);
 
 					model.addAttribute("classActiveShipping", true);
 
-					/*
-					 * if (userPaymentList.size() == 0) { model.addAttribute("emptyPaymentList",
-					 * true); } else { model.addAttribute("emptyPaymentList", false); }
-					 */
+				
+					model.addAttribute("notemptyShippingList", true);
 
 					model.addAttribute("emptyShippingList", false);
 

@@ -8,5 +8,4 @@ public interface CategoryService {
 
 	public ProductType findCategoryById(Long id);
 	List<ProductType> findAllProductType();
-	
 }

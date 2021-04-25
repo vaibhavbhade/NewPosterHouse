@@ -49,7 +49,8 @@ public class OrderServiceImpl implements OrderService {
 			Product product = cartItem.getProduct();
 			ProductConfig productConfig=cartItem.getProductConfig();
 			cartItem.setOrder(order);
-			product.setMaximumQuantity(product.getMaximumQuantity() - cartItem.getQty());
+//			product.setMaximumQuantity(product.getMaximumQuantity() - cartItem.getQty());
+			product.setMaximumQuantity(product.getMaximumQuantity());
 		}
 		
 		  order.setCartItemList(cartItemList);
@@ -58,7 +59,20 @@ public class OrderServiceImpl implements OrderService {
 		  order.setFinalPrice(shoppingCart.getFinalShippingPriceTotal());
 		  order.setCreatedDate(new Date());
 			LocalDate today = LocalDate.now();
-			order.setEstimateDate(today.plusDays(7));
+			
+			int duration=0;
+			for (CartItem cartItem : cartItemList) {
+				try {
+					int temp = Integer.parseInt(cartItem.getProductConfig().getDurationToMake());
+					if(duration<temp) {
+						duration = temp;
+					}
+				}catch(NumberFormatException e) {
+					duration = 7;
+				}
+				
+			}
+			order.setEstimateDate(today.plusDays(duration));
 
 		  shippingAddress.setOrder(order);
 		  billingAddress.setOrder(order);

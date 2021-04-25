@@ -16,10 +16,11 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1> Order Details</h1>
+					<h1>Track Order</h1>
 					<nav class="d-flex align-items-center">
 						<a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>        
-						<a th:href="@{/userOrder}">My Orders</a>
+						<a th:href="@{/userOrder}">My Orders<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Track Order</a>
 					</nav>
 				</div>
 			</div>
@@ -28,7 +29,7 @@
 
 <section class="cart_area">
 
-
+<div class="form-group container">
                                <table class="table" >
                                <thead>
 	<tr>
@@ -41,9 +42,9 @@
 	</tr></thead>
 	<tbody>
 		<tr>
-			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.status}"></td>
+			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.status}"></td> 
 			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.statusLocation}"></td>
-			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.statusDateTime}"></td>
+			<td style="text-align:center" th:with="sdf = ${new java.text.SimpleDateFormat('yyyy-MM-dd''T''HH:mm:ss')}" th:text="${#dates.format(sdf.parse(shipmentTrackLists.shipment.status.statusDateTime), 'dd-MM-yyyy hh:mm:ss a')}"></td>
 			<td style="text-align:center" th:text="${shipmentTrackLists.shipment.status.instructions}"></td>
 			
 		</tr>
@@ -67,10 +68,9 @@
 	</tr></thead>
 	
 	<tbody >
-	<tr th:each="list:${shipmentTrackLists.shipment.scans}">
-		<td style="text-align:center" th:text="${list.scanDetail.scanDateTime}"></td>
-	
-		<td style="text-align:center" th:text="${list.scanDetail.statusDateTime}"></td>
+	<tr th:each="list:${shipmentTrackLists.shipment.scans}"> 
+		<td style="text-align:center" th:with="sdf = ${new java.text.SimpleDateFormat('yyyy-MM-dd''T''HH:mm:ss')}" th:text="${#dates.format(sdf.parse(list.scanDetail.scanDateTime), 'dd-MM-yyyy hh:mm:ss a')}"></td>
+		<td style="text-align:center" th:with="sdf = ${new java.text.SimpleDateFormat('yyyy-MM-dd''T''HH:mm:ss')}" th:text="${#dates.format(sdf.parse(list.scanDetail.statusDateTime), 'dd-MM-yyyy hh:mm:ss a')}"	 ></td>
 		<td style="text-align:center" th:text="${list.scanDetail.scannedLocation}"></td>
 		<td style="text-align:center" th:text="${list.scanDetail.instructions}"></td>
 
@@ -78,7 +78,7 @@
 	</tbody> 
 		
 </table>
-
+</div>
 </section>
 
 			<div th:replace="common/header :: footer "/>

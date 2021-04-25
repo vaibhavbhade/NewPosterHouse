@@ -33,6 +33,7 @@ public class ShoppingCartServiceIpml implements ShoppingCartService {
 		if(cartItemList.size()!=0) {
 		
 		for (CartItem cartItem : cartItemList) {
+			System.out.println(cartItem.getId());
 			if(cartItem.getQty() > 0) {
 			if(cartItem.getProduct().getMaximumQuantity() >0) {
 				cartItemService.updateCartItem(cartItem);
@@ -45,10 +46,13 @@ public class ShoppingCartServiceIpml implements ShoppingCartService {
 				}
 			}
 		}
+		
 		System.out.println("fffffffffffffffffffffffffffffdffffffffffffffffffffffff"+cartTotal);
 		shoppingCart.setGrandTotal(cartTotal);
 		
 		shoppingCart.setFinalShippingPriceTotal(cartTotal.add(finalshippingPriceTotal));
+		System.out.println("fffffffffffffffffffffffffffffdffffffffffffffffffffffff"+cartTotal);
+
 		shoppingCartRepository.save(shoppingCart);
 		
 		return shoppingCart;

@@ -86,6 +86,32 @@ public class NavigationController {
 
 	
 
+	@GetMapping("/about-us")
+	public String aboutUs(Model model) {
+		return "about_us";
+		
+	}
+	@GetMapping("/faqs")
+	public String faqs(Model model) {
+		return "faqs";
+		
+	}
+	@GetMapping("/disclaimer")
+	public String disclaimer(Model model) {
+		return "disclaimer";
+		
+	}
+	@GetMapping("/termsAndCondition")
+	public String termsAndCondition(Model model) {
+		return "terms_and_condtions";
+		
+	}
+	@GetMapping("/privacyPolicy")
+	public String privacyPolicy(Model model) {
+		return "privacy_policy";
+		
+	}
+	
 	
     @GetMapping("/fetchProductBysizeandproductId")
 	public String getProductsizeAndProductWise(@RequestParam("productId") Long producttId,@RequestParam("size")String size,Model model) {
@@ -334,6 +360,9 @@ public class NavigationController {
 		
 			}
 			}
+		System.out.println(productTypeList.size());
+		System.out.println(productTypeList.get(0).getBannerImagePath());
+
 		model.addAttribute("productMapCategory", productMapCategory);
 		model.addAttribute("productTypeList", productTypeList);
 		return "index";
@@ -381,6 +410,18 @@ public class NavigationController {
 			model.addAttribute("emailExists",true);
 			return "registration";
 		}
+		
+		try {
+			mailSender.send(mailConstructor.constructWelcomeMail(firstname,userEmail, Locale.ENGLISH));
+
+		}catch (Exception e) {
+			// TODO: handle exception
+			model.addAttribute("emailExists",true);
+			return "registration";
+		}
+		
+		
+		
 		
 		User user=new User();
 		user.setUsername(username);
@@ -551,11 +592,11 @@ public class NavigationController {
 			try {
 				model.addAttribute("user", user);
 
-				model.addAttribute("addNewShippingAddress", true);
+				
 				model.addAttribute("classActiveShipping", true);
 
 				UserShipping userShipping = new UserShipping();
-
+				model.addAttribute("addNewShippingAddress", true);
 				model.addAttribute("userShipping", userShipping);
 
 				List<String> stateList = INDConstants.listOfIndianStateName;
@@ -694,6 +735,8 @@ public class NavigationController {
 		return "myProfile";
 	   }
 	}
+	
+	
 	
 	@SuppressWarnings("finally")
 	@RequestMapping("/removeUserShipping")

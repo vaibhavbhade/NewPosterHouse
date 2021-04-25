@@ -23,22 +23,22 @@
 					<div class="active-banner-slider owl-carousel">
 						<!-- single-slide -->
 						
-						<div class="row single-slide align-items-center d-flex" th:each="productType:${productTypeList}" th:if=${productType.bannerImageStatus}==true>
-							<div class="col-lg-5 col-md-6" >
-								<div class="banner-content">
-									<h1>Digital Painting<br>Collection!</h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-									<div class="add-bag d-flex align-items-center">
-										<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-										<span class="add-text text-uppercase">Add to Bag</span>
-									</div>
+						<div style="margin-top: 20px;" class="row single-slide align-items-center d-flex" th:each="productType:${productTypeList}"  th:if="${productType.bannerImageStatus}==true">
+						
+							<div class="col-lg-7 col-md-6 col-xs-12 col-sm-12">
+								<div class="banner-img1">
+									<!-- <img class="img-fluid" src="img/banner/banner-img.png" alt=""> -->
+									<img class="img-fluid" th:src="@{#{adminPath}+''+${productType.bannerImagePath}}" alt="">
 								</div>
 							</div>
-							<div class="col-lg-7">
-								<div class="banner-img">
-									<!-- <img class="img-fluid" src="img/banner/banner-img.png" alt=""> -->
-									<img class="img-fluid" th:src="@{#{adminPath}+'/admin/'+${productType.bannerImagePath}}" alt="">
+							<div class="col-lg-5 col-md-6 col-xs-12 col-sm-12"  >
+								<div class="banner-content1">
+									<h1 th:text="${productType.productTypeName}"><br></h1>
+									<p  th:text="${productType.productTypeDiscription}"></p>
+									<!-- <div class="add-bag d-flex align-items-center">
+										<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+										<span class="add-text text-uppercase">Add to Bag</span>
+									</div> -->
 								</div>
 							</div>
 						</div>
@@ -187,7 +187,7 @@
 							<div   class="single-deal">
 								<div class="overlay"></div>
 								<a th:href="@{/fetchProductCategoryWise?id=}+${productType.key.id}"  target="_blank">
-								<img class="img-fluid w-100" th:src="@{#{adminPath}+'/admin/'+${productType.key.catImagePath}}" alt="Img">
+								<img class="img-fluid w-100" th:src="@{#{adminPath}+''+${productType.key.catImagePath}}" alt="Img">
 									<div class="deal-details">
 										<h6  class="deal-title" th:text="${productType.key.productTypeName}"></h6>
 									</div>
@@ -217,7 +217,7 @@
 								</a>
 							</div>
 						</div> -->
-						<<!-- div class="col-xs-12 col-lg-3 col-md-4">
+						<!-- div class="col-xs-12 col-lg-3 col-md-4">
 							<div class="single-deal">
 								<div class="overlay"></div>
 								<img class="img-fluid w-100" th:src="@{img/category/ct3.jpg}" alt="">
@@ -257,16 +257,15 @@
 						<div class="section-title">
 							<h1 th:text="${productType.key.productTypeName}"></h1>
 							<p>Checkout our latest product!</p>
-						     <p>Coming soon.....</p>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<!-- single product -->
-					<div  th:each="product : ${productType.value}" class="col-lg-3 col-md-6">
+					<div id="productDiv" th:each="product : ${productType.value}" class="col-lg-3 col-md-6">
 						<div class="single-product">
 							<a th:href="@{/productDetail?id=}+${product.id}">
-								<img class="img-fluid" th:src="@{#{adminPath}+'/admin/'+${product.productImage.mainImageUrl}}" alt="">
+								<img class="img-fluid" th:src="@{#{adminPath}+''+${product.productImage.mainImageUrl}}" alt="">
 							</a>
 							
 							<div class="product-details">
@@ -277,109 +276,16 @@
 									<h6 th:text="${'Rs.'+product.ourPrice}"></h6>
 <!-- 									<h6 class="l-through">Rs.200.00</h6>
  -->								</div>
-								<div class="prd-bottom">
 
-									<a href="#" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="#" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-								</div>
 							</div>
 						</div>
 					</div>
-					<!-- single product -->
-					<!-- <div class="col-lg-3 col-md-6">
-						<div class="single-product">
-						<a href="category.html">
-							<img class="img-fluid" th:src="@{img/product/ct2.jpg}" alt="">
-							</a>
-							<div class="product-details">
-								<a href="category.html">
-									<h6>3D Keychain</h6>
-								</a>
-								<div class="price">
-									<h6>Rs.150.00</h6>
-									<h6 class="l-through">Rs.210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div> -->
-					<!-- single product -->
-					<!-- <div class="col-lg-3 col-md-6">
-						<div class="single-product">
-						<a href="category.html">
-							<img class="img-fluid" th:src="@{img/product/ct3.jpg}" alt="">
-							</a>
-							<div class="product-details">
-								<a href="category.html">
-									<h6>3D Keychain</h6>
-								</a>
-								<div class="price">
-									<h6>Rs.250.00</h6>
-									<h6 class="l-through">Rs.310.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>	 -->
-					<!-- single product -->
-					<!-- <div class="col-lg-3 col-md-6">
-						<div class="single-product">
-						<a href="category.html">
-							<img class="img-fluid" th:src="@{img/product/ct4.jpg}" alt="">
-							</a>
-							<div class="product-details">
-								<a href="category.html">
-									<h6>Painting</h6>
-								</a>
-								<div class="price">
-									<h6>Rs.450.00</h6>
-									<h6 class="l-through">Rs.500.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>				 -->
+					
 				</div>
 			</div>
 		</div>
 		<!-- single product slide -->
-		<div class="single-product-slider">
+		<div class="single-product-slider" style="display: none;">
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-6 text-center">
